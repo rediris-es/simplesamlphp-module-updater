@@ -1,0 +1,14 @@
+{
+    "updater_header": {
+        "es": "Actualizador de SimpleSAMLphp"
+    },
+    "updater_version": {
+        "es": "Versión actual de SimpleSAMLphp"
+    },
+    "updater_seleciona_version": {
+        "es": "Selecciona la versión de SimpleSAMLphp que deseas actualizar"
+    },
+    "updater_actualizar_version": {
+        "es": "Actualizar"
+    }
+}
