@@ -10,5 +10,26 @@
     },
     "updater_actualizar_version": {
         "es": "Actualizar"
+    },
+    "updater_backup_button": {
+        "es": "Crear copia de seguridad de la configuración de SimpleSAMLphp"
+    },
+    "updater_restore_backup":{
+        "es": "Restaura una copia de seguridad de la configuración de SimpleSAMLphp"
+    },
+    "update_menu_config":{
+        "es": "Configuración"
+    },
+    "update_menu_backup": {
+        "es": "Crear backup de configuración"
+    },
+    "update_menu_update": {
+        "es": "Actualizar SimpleSAMLphp"
+    },
+    "update_menu_restore": {
+        "es": "Restaurar configuración"
+    },
+    "updater_config_button": {
+        "es": "Guardar"
     }
 }
