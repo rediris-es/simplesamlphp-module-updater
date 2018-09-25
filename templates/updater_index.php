@@ -26,6 +26,10 @@
 
     ?>
 
+    <div id="breadcrumbs">
+       <p><a href="<?php echo SimpleSAML\Module::getModuleURL('core/frontpage_config.php'); ?>"><?php echo $this->t('{updater:updater:updater_breadcrumbs_config}'); ?></a> -> <?php echo $this->t('{updater:updater:updater_breadcrumbs_updater}'); ?></p>
+    </div>
+
     <fieldset class="fancyfieldset">
        <legend><?php echo $this->t('{updater:updater:updater_title_info}'); ?></legend> 
        <p style="margin: 1em 2em;"><?php echo $this->t('{updater:updater:updater_p1_info}'); ?></p>

@@ -24,5 +24,6 @@ $hook = (isset($_POST['hook']) ? $_POST['hook'] : "index");
 SimpleSAML_Module::callHooks($hook, $sirinfo);
 
 $t->data['sir'] = $sirinfo;
+$t->data['pageid'] = "frontpage_config";
 $t->show();
 ?>

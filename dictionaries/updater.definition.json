@@ -112,5 +112,11 @@
     },
     "updater_link": {
         "es": "Gestor de actualizaciones"
+    },
+    "updater_breadcrumbs_config": {
+        "es": "Configuración"
+    },
+    "updater_breadcrumbs_updater": {
+        "es": "Actualización de SimpleSAMLphp"
     }
 }
