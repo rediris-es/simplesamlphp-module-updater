@@ -14,10 +14,10 @@ function updater_hook_restore(&$data) {
 		$backupPath = $currentPath.$_POST['selected_backup_restore'];
 
 		if (!file_exists($backupPath)) {
-			$data['errors'][] = $this->t('{updater:updater:updater_error_noexist}')." ".$currentPath;
+			$data['errors'][] = $data['ssphpobj']->t('{updater:updater:updater_error_noexist}')." ".$currentPath;
 		}else{
 			if(!is_writable(__DIR__."/../../../config/") || !is_writable(__DIR__."/../../../metadata/") || !is_writable(__DIR__."/../../../cert/")){
-				$data['errors'][] = $this->t('{updater:updater:updater_error_directory}')." ".$currentPath." ".$this->t('{updater:updater:updater_error_access}');
+				$data['errors'][] = $data['ssphpobj']->t('{updater:updater:updater_error_directory}')." ".$currentPath." ".$data['ssphpobj']->t('{updater:updater:updater_error_access}');
 			}else{
 				if (!file_exists($backupPath."/config/")
 					|| !file_exists($backupPath."/metadata/")
@@ -25,7 +25,7 @@ function updater_hook_restore(&$data) {
 					|| !file_exists($backupPath."/www/")
 					|| !file_exists($backupPath."/modules/")) {
 
-						$data['errors'][] = $this->t('{updater:updater:updater_error_invalid_backup}');
+						$data['errors'][] = $data['ssphpobj']->t('{updater:updater:updater_error_invalid_backup}');
 					
 				}else{
 					full_copy($backupPath."/config/", __DIR__ ."/../../../config");
@@ -34,7 +34,7 @@ function updater_hook_restore(&$data) {
 					full_copy($backupPath."/www/", __DIR__ ."/../../../www");
 					full_copy($backupPath."/modules/", __DIR__ ."/../../../modules");
 
-					$data['success'] = $this->t('{updater:updater:updater_success_backup}')." ".$backupPath." ".$this->t('{updater:updater:updater_success_restore}');
+					$data['success'] = $data['ssphpobj']->t('{updater:updater:updater_success_backup}')." ".$backupPath." ".$data['ssphpobj']->t('{updater:updater:updater_success_restore}');
 				}
 
 				
