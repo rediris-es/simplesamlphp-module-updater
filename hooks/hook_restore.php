@@ -14,16 +14,30 @@ function updater_hook_restore(&$data) {
 		$backupPath = $currentPath.$_POST['selected_backup_restore'];
 
 		if (!file_exists($backupPath)) {
-			$data['errors'][] = "No existe el directorio ".$currentPath;
+			$data['errors'][] = $this->t('{updater:updater:updater_error_noexist}')." ".$currentPath;
 		}else{
 			if(!is_writable(__DIR__."/../../../config/") || !is_writable(__DIR__."/../../../metadata/") || !is_writable(__DIR__."/../../../cert/")){
-				$data['errors'][] = "El directorio ".$currentPath." no tiene permiso de escritura para el usuario apache:apache";
+				$data['errors'][] = $this->t('{updater:updater:updater_error_directory}')." ".$currentPath." ".$this->t('{updater:updater:updater_error_access}');
 			}else{
-				full_copy($backupPath."/config/", __DIR__ ."/../../../config");
-				full_copy($backupPath."/metadata/", __DIR__ ."/../../../metadata");
-				full_copy($backupPath."/cert/", __DIR__ ."/../../../cert");
+				if (!file_exists($backupPath."/config/")
+					|| !file_exists($backupPath."/metadata/")
+					|| !file_exists($backupPath."/cert/")
+					|| !file_exists($backupPath."/www/")
+					|| !file_exists($backupPath."/modules/")) {
 
-				$data['success'] = "La copia de seguridad ".$backupPath." se ha restaurado correctamente";
+						$data['errors'][] = $this->t('{updater:updater:updater_error_invalid_backup}');
+					
+				}else{
+					full_copy($backupPath."/config/", __DIR__ ."/../../../config");
+					full_copy($backupPath."/metadata/", __DIR__ ."/../../../metadata");
+					full_copy($backupPath."/cert/", __DIR__ ."/../../../cert");
+					full_copy($backupPath."/www/", __DIR__ ."/../../../www");
+					full_copy($backupPath."/modules/", __DIR__ ."/../../../modules");
+
+					$data['success'] = $this->t('{updater:updater:updater_success_backup}')." ".$backupPath." ".$this->t('{updater:updater:updater_success_restore}');
+				}
+
+				
 				//$newfile = fopen($backup_path."/backup_name", "w") or die("Unable to open file!");
 				//$txt = $_POST['backup_name'];
 				//fwrite($newfile, $txt);

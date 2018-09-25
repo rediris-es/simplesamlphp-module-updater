@@ -24,19 +24,16 @@
             echo '</div>';   
         }
 
-
-
     ?>
-    
 
     <fieldset class="fancyfieldset">
-       <legend>Información sobre este módulo</legend> 
-       <p style="margin: 1em 2em;">Este módulo muestra información sobre la versión actualmente instalada del software, y permite realizar y restaurar copias de seguridad sobre su instancia de simpleSAMLphp.</p>
-       <p style="margin: 1em 2em;">Por favor, lea la información sobre el uso de este módulo, y tome precauciones antes de hacer una actualización. Si su instalación depende de bases de datos, realice copia de seguridad de las mismas.</p>
+       <legend><?php echo $this->t('{updater:updater:updater_title_info}'); ?></legend> 
+       <p style="margin: 1em 2em;"><?php echo $this->t('{updater:updater:updater_p1_info}'); ?></p>
+       <p style="margin: 1em 2em;"><?php echo $this->t('{updater:updater:updater_p2_info}'); ?></p>
        <div style="margin: 1em 2em;">
            <div class="input-container">
                <div class="float-l">
-                   <label>Versión actualmente instalada:</label>
+                   <label><?php echo $this->t('{updater:updater:updater_version}'); ?>:</label>
                </div>
                <div class="float-r">
                    <input readonly="readonly" value="<?php echo $this->data['sir']['currentVersion']; ?>">
@@ -45,7 +42,7 @@
            </div>
            <div class="input-container">
                <div class="float-l">
-                   <label>Ruta donde se almacenan los backups:</label>
+                   <label><?php echo $this->t('{updater:updater:updater_path}'); ?>:</label>
                </div>
                <div class="float-r">
                    <input readonly="readonly" value="<?php echo $this->data['sir']['backupPath']; ?>">
@@ -54,7 +51,7 @@
            </div>
            <div class="input-container">
                <div class="float-l">
-                   <label>Última copia de seguridad disponible:</label>
+                   <label><?php echo $this->t('{updater:updater:updater_latestbackup}'); ?>:</label>
                </div>
                <div class="float-r">
                    <input readonly="readonly" style="width:300px;" value="<?php echo $this->data['sir']['latestBackup']->filename; ?>">
@@ -65,11 +62,11 @@
     </fieldset>
 
      <fieldset class="fancyfieldset">
-       <legend>Actualización</legend> 
+       <legend><?php echo $this->t('{updater:updater:updater_title_actualizacion}'); ?></legend> 
        <div style="margin: 1em 2em;">
            <div class="input-container">
                <div class="float-l">
-                   <label>Versiones disponibles para actualizar:</label>
+                   <label><?php echo $this->t('{updater:updater:updater_versiones_disponibles}'); ?>:</label>
                </div>
                <div class="float-r">
                    <select>
@@ -81,20 +78,20 @@
                <div style="clear: both;"></div>
            </div>
            <div>
-               <input type="submit" value="Actualizar a la versión seleccionada"/>
+               <input type="submit" value="<?php echo $this->t('{updater:updater:updater_btn_update}'); ?>"/>
            </div>
            <div>
-               <p>(NOTA: la actualización no funcionará si no se han realizado copias de seguridad en los últimos 5 minutos)</p>
+               <p><?php echo $this->t('{updater:updater:updater_versiones_nota}'); ?></p>
            </div>
         </div>
     </fieldset>
 
      <fieldset class="fancyfieldset">
-       <legend>Copias de seguridad</legend> 
+       <legend><?php echo $this->t('{updater:updater:updater_title_backups}')?></legend> 
        <div style="margin: 1em 2em;">
            <div class="input-container">
                <div class="float-l">
-                   <label>Copias de seguridad anteriores disponibles:</label>
+                   <label><?php echo $this->t("{updater:updater:updater_list_backups}"); ?>:</label>
                </div>
                <div class="float-l">
                     <select id="backups">
@@ -108,21 +105,21 @@
            <div>
                 <form id="form-backup" name="form-backup" method="POST">
                     <input type="hidden" value="backup" name="hook"/>
-                    <input type="submit" name="send_form" value="Realizar una nueva copia de seguridad"/>
+                    <input type="submit" name="send_form" value="<?php echo $this->t('{updater:updater:updater_btn_backup}'); ?>"/>
                 </form>
            </div>
-            <div>
+           <div>
                 <form id="form-restore" name="form-restore" method="POST" onsubmit="return restore_backup();">
                     <input type="hidden" value="restore" name="hook"/>
                     <input type="hidden" value="" name="selected_backup_restore" id="selected_backup_restore"/>
-                    <input type="submit" name="send_form" value="Restaurar la copia de seguridad seleccionada"/>
+                    <input type="submit" name="send_form" value="<?php echo $this->t('{updater:updater:updater_btn_restore}'); ?>"/>
                 </form>
            </div>
-            <div>
+           <div>
                 <form id="form-delete" name="form-delete" method="POST" onsubmit="return delete_backup();">
                     <input type="hidden" value="delete" name="hook"/>
                     <input type="hidden" value="" name="selected_backup_delete" id="selected_backup_delete"/>
-                    <input type="submit" name="send_form" value="Eliminar la copia de seguridad seleccionada"/>
+                    <input type="submit" name="send_form" value="<?php echo $this->t('{updater:updater:updater_btn_delete}'); ?>"/>
                 </form>
            </div>
         </div>
@@ -132,22 +129,24 @@
 
 <script>
 
-function delete_backup(){
+    function delete_backup(){
 
-    if (window.confirm("¿Estás seguro de que quieres eliminar la copia de seguridad seleccionada?")) { 
-        document.getElementById("selected_backup_delete").value = document.getElementById("backups").value;
-        return true;
-    }else{
-        return false;
+        if (window.confirm("<?php echo $this->t('{updater:updater:updater_confirm_dialog}'); ?>")) { 
+            document.getElementById("selected_backup_delete").value = document.getElementById("backups").value;
+            return true;
+        }else{
+            return false;
+        }
+
     }
-}
 
-function restore_backup(){
+    function restore_backup(){
 
-    document.getElementById("selected_backup_restore").value = document.getElementById("backups").value;
+        document.getElementById("selected_backup_restore").value = document.getElementById("backups").value;
 
-    return true;
-}
+        return true;
+
+    }
 
 </script>
 

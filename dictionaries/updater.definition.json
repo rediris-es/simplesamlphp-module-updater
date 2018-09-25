@@ -3,7 +3,7 @@
         "es": "Actualizador de SimpleSAMLphp"
     },
     "updater_version": {
-        "es": "Versión actual de SimpleSAMLphp"
+        "es": "Versión actualmente instalada"
     },
     "updater_seleciona_version": {
         "es": "Selecciona la versión de SimpleSAMLphp que deseas actualizar"
@@ -17,19 +17,82 @@
     "updater_restore_backup":{
         "es": "Restaura una copia de seguridad de la configuración de SimpleSAMLphp"
     },
-    "update_menu_config":{
-        "es": "Configuración"
-    },
-    "update_menu_backup": {
-        "es": "Crear backup de configuración"
-    },
-    "update_menu_update": {
-        "es": "Actualizar SimpleSAMLphp"
-    },
-    "update_menu_restore": {
-        "es": "Restaurar configuración"
-    },
     "updater_config_button": {
         "es": "Guardar"
+    },
+    "updater_path": {
+        "es": "Ruta donde se almacenan los backups"
+    },
+    "updater_latestbackup": {
+        "es": "Última copia de seguridad disponible"
+    },
+    "updater_title_actualizacion": {
+        "es": "Actualización"
+    },
+    "updater_versiones_disponibles": {
+        "es": "Versiones disponibles para actualizar"
+    },
+    "updater_versiones_nota": {
+        "es": "(NOTA: la actualización no funcionará si no se han realizado copias de seguridad en los últimos 5 minutos)"
+    },
+    "updater_title_backups": {
+        "es": "Copias de seguridad"
+    },
+    "updater_list_backups": {
+        "es": "Copias de seguridad anteriores disponibles"
+    },
+    "updater_title_info": {
+        "es": "Información sobre este módulo"
+    },
+    "updater_p1_info": {
+        "es": "Este módulo muestra información sobre la versión actualmente instalada del software, y permite realizar y restaurar copias de seguridad sobre su instancia de simpleSAMLphp."
+    },
+    "updater_p2_info": {
+        "es": "Por favor, lea la información sobre el uso de este módulo, y tome precauciones antes de hacer una actualización. Si su instalación depende de bases de datos, realice copia de seguridad de las mismas."
+    },
+    "updater_btn_update": {
+        "es": "Actualizar a la versión seleccionada"
+    },
+    "updater_btn_backup": {
+        "es": "Realizar una nueva copia de seguridad"
+    },
+    "updater_btn_restore": {
+        "es": "Restaurar la copia de seguridad seleccionada"
+    },
+    "updater_btn_delete": {
+        "es": "Eliminar la copia de seguridad seleccionada"
+    },
+    "updater_confirm_dialog": {
+        "es": "¿Estás seguro de que quieres eliminar la copia de seguridad seleccionada?"
+    },
+    "updater_error_noexist": {
+        "es": "No existe el directorio"
+    },
+    "updater_error_directory": {
+        "es": "El directorio"
+    },
+    "updater_error_access": {
+        "es": "no tiene permiso de escritura para el usuario apache:apache"
+    },
+    "updater_success_backup": {
+        "es": "La copia de seguridad"
+    },
+    "updater_success_delete": {
+        "es": "se ha eliminado correctamente"
+    },
+    "updater_success_make": {
+        "es": "se ha realizado correctamente"
+    },
+    "updater_success_restore": {
+        "es": "se ha restaurado correctamente"
+    },
+    "updater_error_invalid_backup": {
+        "es": "La copia de seguridad tiene un formato incorrecto"
+    },
+    "updater_error_params": {
+        "es": "Parametros invalidos"
+    },
+    "updater_error_params": {
+        "es": "No se ha podido crear el directorio"
     }
 }
