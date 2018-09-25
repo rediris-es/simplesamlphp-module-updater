@@ -47,20 +47,49 @@ function setData(&$data){
     $data['currentVersion'] = $currentVersion;
 
     $filename = __DIR__ . '/../../../config/backup_config.php';
-    include($filename);
-    $backupPath = (isset($config['backup_path']) ? $config['backup_path'] : "");
-    $data['backupPath'] = $backupPath;
 
     $backups = array();
-    foreach(glob($backupPath.'*', GLOB_ONLYDIR) as $dir) {
-        $back = new ArrayObject();
-        $back->filename = basename($dir);
-        $back->name = basename($dir);
-        array_push($backups, $back);
+    $backupPath = "";
+    if (!file_exists($filename)) {
+        $data['errors'][] = $data['ssphpobj']->t('{updater:updater:updater_config_file_error}')." ".$filename;
+    }else{
+
+        include($filename);
+        if(!isset($config['backup_path'])){
+            $data['errors'][] = $data['ssphpobj']->t('{updater:updater:updater_config_param_error}');
+        }else{
+           
+            $backupPath = $config['backup_path'];
+            
+            if(!file_exists($backupPath)){
+                $data['errors'][] = $data['ssphpobj']->t('{updater:updater:updater_config_path_error}');
+            }else{
+                if(!is_writable($backupPath)){
+
+                    $data['errors'][] = $data['ssphpobj']->t('{updater:updater:updater_config_path_perm}');
+
+                }else{
+
+                    
+                
+                    foreach(glob($backupPath.'*', GLOB_ONLYDIR) as $dir) {
+                        $back = new ArrayObject();
+                        $back->filename = basename($dir);
+                        $back->name = basename($dir);
+                        array_push($backups, $back);
+                    }
+
+                }
+               
+            }         
+            
+        }
     }
 
     $data['backups'] = $backups;
-    $data['latestBackup'] = $backups[count($backups)-1];
+    $data['latestBackup'] = (count($backups)==0 ? null : $backups[count($backups)-1]);
+    $data['backupPath'] = $backupPath;
+    
 
     $contentFeed = file_get_contents("https://packagist.org/feeds/package.simplesamlphp/simplesamlphp.rss");
     $xmlFeed = new SimpleXmlElement($contentFeed);   

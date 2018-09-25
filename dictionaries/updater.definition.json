@@ -94,5 +94,17 @@
     },
     "updater_error_params": {
         "es": "No se ha podido crear el directorio"
+    },
+    "updater_config_file_error": {
+        "es": "No se ha podido encontrar el fichero de configuración de este modulo. Deberia estar en: "
+    },
+    "updater_config_param_error": {
+        "es": "No existe el parametro 'backup_path' en el fichero de configuración. "
+    },
+    "updater_config_path_error": {
+        "es": "No existe el directorio configurado para la gestion de las copias de seguridad. "
+    },
+    "updater_config_path_perm": {
+        "es": "El directorio configurado para la gestión de copias de seguridad no tiene permisos de lectura. "
     }
 }

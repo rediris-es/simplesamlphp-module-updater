@@ -36,7 +36,7 @@
                    <label><?php echo $this->t('{updater:updater:updater_version}'); ?>:</label>
                </div>
                <div class="float-r">
-                   <input readonly="readonly" value="<?php echo $this->data['sir']['currentVersion']; ?>">
+                   <input readonly="readonly" style="width: 100px; text-align: right; " value="<?php echo $this->data['sir']['currentVersion']; ?>">
                </div>
                <div style="clear: both;"></div>
            </div>
@@ -45,7 +45,7 @@
                    <label><?php echo $this->t('{updater:updater:updater_path}'); ?>:</label>
                </div>
                <div class="float-r">
-                   <input readonly="readonly" value="<?php echo $this->data['sir']['backupPath']; ?>">
+                   <input readonly="readonly" style="width:300px; text-align: right" value="<?php echo $this->data['sir']['backupPath']; ?>">
                </div>
                <div style="clear: both;"></div>
            </div>
@@ -54,7 +54,7 @@
                    <label><?php echo $this->t('{updater:updater:updater_latestbackup}'); ?>:</label>
                </div>
                <div class="float-r">
-                   <input readonly="readonly" style="width:300px;" value="<?php echo $this->data['sir']['latestBackup']->filename; ?>">
+                   <input readonly="readonly" style="width:300px; text-align: right;" value="<?php echo $this->data['sir']['latestBackup']->filename; ?>">
                </div>
                <div style="clear: both;"></div>
            </div>
