@@ -4,7 +4,7 @@
 function updater_hook_restore(&$data) {
 
 
-	$filename = __DIR__ . '/../../../config/backup_config.php';
+	$filename = __DIR__ . '/../../../config/updater_config.php';
     include($filename);
 
 	$currentPath = (isset($config['backup_path']) ? $config['backup_path'] : "");//Si no existe backup_path, no mostrar ningun resultado

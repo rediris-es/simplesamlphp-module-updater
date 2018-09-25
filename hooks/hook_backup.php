@@ -7,7 +7,7 @@ function updater_hook_backup(&$data) {
 	$cfg = new SimpleSAML_Configuration(array(),array());
 	$currentVersion = $cfg->getVersion();
 
-	$filename = __DIR__ . '/../../../config/backup_config.php';
+	$filename = __DIR__ . '/../../../config/updater_config.php';
     include($filename);
 
 	$currentPath = (isset($config['backup_path']) ? $config['backup_path'] : "");//Si no existe backup_path, no permitir realizar el backup, mostrar error

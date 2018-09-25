@@ -46,7 +46,7 @@ function setData(&$data){
     $currentVersion = $cfg->getVersion();
     $data['currentVersion'] = $currentVersion;
 
-    $filename = __DIR__ . '/../../../config/backup_config.php';
+    $filename = __DIR__ . '/../../../config/updater_config.php';
 
     $backups = array();
     $backupPath = "";

@@ -106,5 +106,11 @@
     },
     "updater_config_path_perm": {
         "es": "El directorio configurado para la gestión de copias de seguridad no tiene permisos de lectura. "
+    },
+    "updater_no_backups": {
+        "es": "No existe ninguna copia de seguridad"
+    },
+    "updater_link": {
+        "es": "Gestor de actualizaciones"
     }
 }

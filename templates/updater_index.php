@@ -54,7 +54,7 @@
                    <label><?php echo $this->t('{updater:updater:updater_latestbackup}'); ?>:</label>
                </div>
                <div class="float-r">
-                   <input readonly="readonly" style="width:300px; text-align: right;" value="<?php echo $this->data['sir']['latestBackup']->filename; ?>">
+                   <input readonly="readonly" style="width:300px; text-align: right;" value="<?php echo ($this->data['sir']['latestBackup']==null ? $this->t('{updater:updater:updater_no_backups}') : $this->data['sir']['latestBackup']->filename); ?>">
                </div>
                <div style="clear: both;"></div>
            </div>
