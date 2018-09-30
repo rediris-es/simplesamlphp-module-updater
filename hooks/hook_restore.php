@@ -28,6 +28,7 @@ function updater_hook_restore(&$data) {
 						$data['errors'][] = $data['ssphpobj']->t('{updater:updater:updater_error_invalid_backup}');
 					
 				}else{
+
 					full_copy($backupPath."/config/", __DIR__ ."/../../../config");
 					full_copy($backupPath."/metadata/", __DIR__ ."/../../../metadata");
 					full_copy($backupPath."/cert/", __DIR__ ."/../../../cert");
@@ -35,6 +36,7 @@ function updater_hook_restore(&$data) {
 					full_copy($backupPath."/modules/", __DIR__ ."/../../../modules");
 
 					$data['success'] = $data['ssphpobj']->t('{updater:updater:updater_success_backup}')." ".$backupPath." ".$data['ssphpobj']->t('{updater:updater:updater_success_restore}');
+				
 				}
 
 				
