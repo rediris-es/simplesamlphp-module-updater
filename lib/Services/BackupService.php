@@ -78,8 +78,19 @@ class BackupService
 			$system->cpRecursive(__DIR__ ."/../../../../www/", $backup_path."/www");
 			$system->cpRecursive(__DIR__ ."/../../../../modules/", $backup_path."/modules");
 
+
+			$pathInfo = pathInfo($backup_path);
+		    $parentPath = $pathInfo['dirname'];
+		    $dirName = $pathInfo['basename']; 
+
 			//$data['success'] = $data['ssphpobj']->t('{updater:updater:updater_success_backup}')." ".$backupPath." ".$data['ssphpobj']->t('{updater:updater:updater_success_make}');
-		
+			$zip = new ZipArchive();
+		    $zip->open($backup_path.".zip", ZIPARCHIVE::CREATE);
+		    $zip->addEmptyDir($dirName); 
+		    $system->zipRecursive($backup_path, $zip, strlen("$parentPath/"));
+		    $zip->close(); 
+
+		    $system->rmRecursive($backup_path);
 		}
 
     }
@@ -113,40 +124,54 @@ class BackupService
 
     public function restoreBackup($backup){
 
-    	if($this->backupIsValid($backup)){
+    	//if($this->backupIsValid($backup)){
 
+    		$zip = new ZipArchive();
     		$system = new System();
 
-			$system->cpRecursive($backupPath."/config/", __DIR__ ."/../../../config");
-			$system->cpRecursive($backupPath."/metadata/", __DIR__ ."/../../../metadata");
-			$system->cpRecursive($backupPath."/cert/", __DIR__ ."/../../../cert");
-			$system->cpRecursive($backupPath."/www/", __DIR__ ."/../../../www");
-			$system->cpRecursive($backupPath."/modules/", __DIR__ ."/../../../modules");
 
-    	}
+			if ($zip->open($backup.".zip") === TRUE) {
+
+			    $zip->extractTo($this->configData->getString("backup_path"));
+			    $zip->close();
+			    $system->cpRecursive($backup."/config/", __DIR__ ."/../../../../config");
+				$system->cpRecursive($backup."/metadata/", __DIR__ ."/../../../../metadata");
+				$system->cpRecursive($backup."/cert/", __DIR__ ."/../../../../cert");
+				$system->cpRecursive($backup."/www/", __DIR__ ."/../../../../www");
+				$system->cpRecursive($backup."/modules/", __DIR__ ."/../../../../modules");
+
+				$system->rmRecursive($backup);
+
+			} else {
+				$this->errors []= "No se pudo abrir la copia de seguridad";
+			}
+
+    	//}
 
     }
 
     public function deleteBackup($backupPath){
 
-    	if (!file_exists($backupPath)) {
-			
+    	if (!file_exists($backupPath.".zip")) {
+			$this->errors []= "No existe la copia de seguridad.";
 		}else{
-			if(!is_writable($backupPath)){
-				
+			if(!is_writable($backupPath.".zip")){
+				$this->errors []= "El fichero no puede eliminarse, comprueba que tiene los permisos adecuados.";
 			}else{
-
 				$system = new System();
-				$system->rmRecursive($backupPath);
-
+				unlink($backupPath.".zip");
 			}
 		}
     }
 
     public function getBackups(){
 
-		foreach(glob($this->configData->getString('backup_path').'*', GLOB_ONLYDIR) as $dir) {
-            array_push($this->backups, basename($dir));
+		foreach(glob($this->configData->getString('backup_path').'*') as $file) {
+
+			list($filename) = explode(".zip", basename($file));
+
+            array_push($this->backups, $filename);
+
         }
 
         $this->lastBackup = (count($this->backups)>0 ? $this->backups[count($this->backups)-1] : null);

@@ -15,7 +15,7 @@ if ($_GET['hook']=="delete"
 	&& $_GET['selected_backup_delete']!="") {
 
 	$currentPath = $BackupService->configData->getString("backup_path");
-	$backupPath = $currentPath.$_GET['selected_backup_delete'];
+	$backupPath = $currentPath.urldecode($_GET['selected_backup_delete']);
 
 	$BackupService->deleteBackup($backupPath);
 
@@ -25,7 +25,6 @@ if ($_GET['hook']=="delete"
 	$errors = $BackupService->errors;
 	$error = (count($errors)>0 ? 1 : 0 );
 	
-
 }else{
 	$backups = $BackupService->backups;
 	$lastBackup = $BackupService->lastBackup;

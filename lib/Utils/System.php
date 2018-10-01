@@ -59,6 +59,26 @@ class System
         }
     }
 
+    public function zipRecursive($folder, &$zipFile, $exclusiveLength) {
+        $handle = opendir($folder);
+        while (false !== $f = readdir($handle)) {
+          if ($f != '.' && $f != '..') {
+            $filePath = "$folder/$f";
+            // Remove prefix from file path before add to zip.
+            $localPath = substr($filePath, $exclusiveLength);
+            if (is_file($filePath)) {
+              $zipFile->addFile($filePath, $localPath);
+            } elseif (is_dir($filePath)) {
+              // Add sub-directory.
+              $zipFile->addEmptyDir($localPath);
+              $this->zipRecursive($filePath, $zipFile, $exclusiveLength);
+            }
+          }
+        }
+        closedir($handle);
+    }
+
+
 
 
 }

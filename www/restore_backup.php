@@ -18,7 +18,7 @@ if ($_GET['hook']=="restore"
 	$BackupService = new BackupService();
 
 	$currentPath = $BackupService->configData->getString("backup_path");
-	$backupPath = $currentPath.$_GET['selected_backup_restore'];
+	$backupPath = $currentPath.urldecode($_GET['selected_backup_restore']);
 
 	$BackupService->restoreBackup($backupPath);
 

@@ -37,16 +37,21 @@
             padding: 1rem 1.5rem;
             width: 24rem;
             border-radius: 0.5rem;
+            text-align: center;
         }
 
         #loader {
             border: 16px solid #f3f3f3; 
-            border-top: 16px solid #3498db; 
+            border-top: 16px solid #3d8e9c; 
             border-radius: 50%;
             width: 60px;
             height: 60px;
             margin: 0 auto;
             animation: spin 2s linear infinite;
+        }
+
+        #modal-button{
+          margin-top: 16px;
         }
 
         @keyframes spin {
@@ -182,7 +187,7 @@
         <div id="status-msg"></div>
         <div id="loader-msg">Espere unos segundos</div>
         <div id="loader"></div>
-        <div>
+        <div id="modal-button">
           <input type="button" onclick="toggleModal();" name="close_modal" value="Aceptar"/>
         </div>
     </div>
@@ -236,7 +241,7 @@
 
         if (window.confirm("<?php echo $this->t('{updater:updater:updater_confirm_dialog}'); ?>")) { 
 
-            document.getElementById("selected_backup_delete").value = document.getElementById("backups").value;
+            document.getElementById("selected_backup_delete").value = encodeURIComponent(document.getElementById("backups").value);
 
             $.ajax({
                 type: "GET",
@@ -281,7 +286,7 @@
 
     function restore_backup(){
 
-        document.getElementById("selected_backup_restore").value = document.getElementById("backups").value;
+        document.getElementById("selected_backup_restore").value = encodeURIComponent(document.getElementById("backups").value);
 
         $("#status-msg").html("");
 
