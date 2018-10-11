@@ -118,23 +118,26 @@
 
      <fieldset class="fancyfieldset">
        <legend><?php echo $this->t('{updater:updater:updater_title_actualizacion}'); ?></legend> 
-       <div style="margin: 1em 2em;">
-           <div class="input-container">
-               <div class="float-l">
-                   <label><?php echo $this->t('{updater:updater:updater_versiones_disponibles}'); ?>:</label>
-               </div>
-               <div class="float-r">
-                   <select>
-                       <?php foreach ($this->data['sir']['versions'] as $key => $value) { ?>
-                            <option value="<?php echo $value->title; ?>"><?php echo $value->title; ?></option>
-                        <?php } ?>
-                   </select>
-               </div>
-               <div style="clear: both;"></div>
-           </div>
-           <div>
-               <input type="submit" value="<?php echo $this->t('{updater:updater:updater_btn_update}'); ?>"/>
-           </div>
+        <div style="margin: 1em 2em;">
+          <form id="form-update" method="POST">
+             <div class="input-container">
+                 <div class="float-l">
+                     <label><?php echo $this->t('{updater:updater:updater_versiones_disponibles}'); ?>:</label>
+                 </div>
+                 <div class="float-r">
+                     <select id="simplesamlphp_version" name="simplesamlphp_version">
+                         <?php foreach ($this->data['sir']['versions'] as $key => $value) { ?>
+                              <option value="<?php echo $value->title; ?>"><?php echo $value->title; ?></option>
+                          <?php } ?>
+                     </select>
+                 </div>
+                 <div style="clear: both;"></div>
+             </div>
+             <div>
+                 <input type="hidden" value="update" name="hook"/>
+                 <input type="button" onclick="update();" value="<?php echo $this->t('{updater:updater:updater_btn_update}'); ?>"/>
+             </div>
+            </form>
            <div>
                <p><?php echo $this->t('{updater:updater:updater_versiones_nota}'); ?></p>
            </div>
@@ -185,10 +188,10 @@
 <div id="modal" class="loading-modal">
     <div class="modal-content">
         <div id="status-msg"></div>
-        <div id="loader-msg">Espere unos segundos</div>
+        <div id="loader-msg"></div>
         <div id="loader"></div>
         <div id="modal-button">
-          <input type="button" onclick="toggleModal();" name="close_modal" value="Aceptar"/>
+          <input type="button" onclick="toggleModal();" name="close_modal" value="Cerrar"/>
         </div>
     </div>
 </div>
@@ -199,12 +202,52 @@
 
     var modal = document.getElementById("modal");
 
-    function create_backup(){
+    function update(){
+
+        var version = document.getElementById("simplesamlphp_version").value;
 
         $("#status-msg").html("");
+        $("#loader-msg").html("Se está actualizando a la versión " + version + " de SimpleSAMLphp");
 
         $.ajax({
-            type: "GET",
+            type: "POST",
+            url: "update.php",
+            data: $('#form-update').serialize(),
+            dataType: "json",
+            beforeSend: function() {
+                toggleModal();
+                $('#loader, #loader-msg').show();
+            },
+            complete: function() {
+                $('#loader, #loader-msg').hide();
+            },
+            success: function(data) {
+                if(data.error==1){
+                    for(var i=0; i<data.errors.length; i++){
+                        $("#status-msg").append(data.errors[i]);
+                        $("#status-msg").append("<br/>");
+                    }
+                }else{
+                    $("#status-msg").text("SimpleSAMLphp actualizado correctamente");
+
+                }
+
+            },
+            error: function() {
+                console.log("No se ha podido obtener la información");
+            }
+        });
+
+    }
+
+    function create_backup(){
+
+
+        $("#status-msg").html("");
+        $("#loader-msg").html("Se está creando una nueva copia de seguridad, espere unos segundos...");
+
+        $.ajax({
+            type: "POST",
             url: "create_backup.php",
             data: $('#form-backup').serialize(),
             dataType: "json",
@@ -216,7 +259,6 @@
                 $('#loader, #loader-msg').hide();
             },
             success: function(data) {
-                console.log(data);
                 if(data.error==1){
                     for(var i=0; i<data.errors.length; i++){
                         $("#status-msg").append(data.errors[i]);
@@ -237,14 +279,17 @@
 
     function delete_backup(){
 
+        var backup = document.getElementById("backups").value;
+
         $("#status-msg").html("");
+        $("#loader-msg").html("Se está eliminando la copia de seguridad " + backup + ", espere unos segundos...");
 
         if (window.confirm("<?php echo $this->t('{updater:updater:updater_confirm_dialog}'); ?>")) { 
 
-            document.getElementById("selected_backup_delete").value = encodeURIComponent(document.getElementById("backups").value);
+            document.getElementById("selected_backup_delete").value = encodeURIComponent(backup);
 
             $.ajax({
-                type: "GET",
+                type: "POST",
                 url: "delete_backup.php",
                 data: $('#form-delete').serialize(),
                 dataType: "json",
@@ -263,7 +308,7 @@
                             $("#status-msg").append("<br/>");
                         }
                     }else{
-                        $("#status-msg").text("Copia de seguridad eliminada correctamente");
+                        $("#status-msg").text("Copia de seguridad " + backup + " eliminada correctamente");
                         reloadLastBackup(data.lastBackup);
                         reloadBackupList(data.backups);
                     }
@@ -286,12 +331,15 @@
 
     function restore_backup(){
 
-        document.getElementById("selected_backup_restore").value = encodeURIComponent(document.getElementById("backups").value);
+        var backup = document.getElementById("backups").value;
 
+        document.getElementById("selected_backup_restore").value = encodeURIComponent(backup);
+
+        $("#loader-msg").html("Se está restaurando la copia de seguridad " + backup + ", espere unos segundos...");
         $("#status-msg").html("");
 
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: "restore_backup.php",
             data: $('#form-restore').serialize(),
             dataType: "json",
@@ -310,7 +358,7 @@
                         $("#status-msg").append("<br/>");
                     }
                 }else{
-                    $("#status-msg").text("Copia de seguridad restaurada correctamente");
+                    $("#status-msg").text("Copia de seguridad " + backup + " restaurada correctamente");
                 }
                 
             },

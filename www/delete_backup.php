@@ -10,12 +10,12 @@ include (__DIR__. "/../lib/Utils/System.php");
 $SSPVersionsService = new SSPVersionsService();
 $BackupService = new BackupService();
 
-if ($_GET['hook']=="delete" 
-	&& isset($_GET['selected_backup_delete']) 
-	&& $_GET['selected_backup_delete']!="") {
+if ($_POST['hook']=="delete" 
+	&& isset($$_POST['selected_backup_delete']) 
+	&& $_POST['selected_backup_delete']!="") {
 
 	$currentPath = $BackupService->configData->getString("backup_path");
-	$backupPath = $currentPath.urldecode($_GET['selected_backup_delete']);
+	$backupPath = $currentPath.urldecode($_POST['selected_backup_delete']);
 
 	$BackupService->deleteBackup($backupPath);
 

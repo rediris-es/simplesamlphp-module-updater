@@ -10,15 +10,15 @@ include (__DIR__. "/../lib/Utils/System.php");
 //$backupService = new BackupService();
 
 
-if ($_GET['hook']=="restore" 
-	&& isset($_GET['selected_backup_restore']) 
-	&& $_GET['selected_backup_restore']!="") {
+if ($_POST['hook']=="restore" 
+	&& isset($_POST['selected_backup_restore']) 
+	&& $_POST['selected_backup_restore']!="") {
 
 	$SSPVersionsService = new SSPVersionsService();
 	$BackupService = new BackupService();
 
 	$currentPath = $BackupService->configData->getString("backup_path");
-	$backupPath = $currentPath.urldecode($_GET['selected_backup_restore']);
+	$backupPath = $currentPath.urldecode($_POST['selected_backup_restore']);
 
 	$BackupService->restoreBackup($backupPath);
 
