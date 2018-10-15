@@ -1,0 +1,20 @@
+{
+	"name": "rediris-es/simplesamlphp-module-updater",
+	"description": "A module to backup and update SimpleSAMLphp installations",
+	"type": "simplesamlphp-module",
+    	"license": "Apache-2.0",	
+	"keywords": [ "simplesamlphp", "RedIRIS", "SIR", "IdP", "updater" ],
+	"authors": [
+	{
+		"name": "Adrián Gómez",
+		"email": "adrian.gomez@externos.rediris.es"
+	},
+	{
+		"name": "José Manuel Macías",
+		"email": "jmanuel.macias@rediris.es"
+	}	
+	],
+    	"require": {
+        	"simplesamlphp/composer-module-installer": "~1.0"
+    	}
+}
