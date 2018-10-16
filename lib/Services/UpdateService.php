@@ -57,7 +57,7 @@ class UpdateService
 		
 		// change out of the webroot so that the vendors file is not created in
 		// a place that will be visible to the intahwebz
-		chdir('../');
+		chdir('../../');
 		putenv('COMPOSER_HOME=' . __DIR__ . '/../vendor/bin/composer');
 		//Create the commands
 		$input = new ArrayInput(array('command' => 'update'));
