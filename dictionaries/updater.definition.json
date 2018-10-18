@@ -76,7 +76,7 @@
         "en": "Create a new backup"
     },
     "updater_btn_restore": {
-        "es": "Restaurar la copia de seguridad seleccionada"
+        "es": "Restaurar la copia de seguridad seleccionada",
         "en": "Restore selected backup"
     },
     "updater_btn_delete": {
