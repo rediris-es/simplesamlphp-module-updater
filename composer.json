@@ -15,7 +15,6 @@
 	}	
 	],
     	"require": {
-        	"simplesamlphp/composer-module-installer": "~1.0",
-        	"composer/composer": "dev-master"
+        	"simplesamlphp/composer-module-installer": "~1.0"
     	}
 }
