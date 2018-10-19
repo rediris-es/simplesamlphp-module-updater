@@ -21,7 +21,7 @@ define('EXTRACT_DIRECTORY', "../");
 
 use SimpleSAML\Module;
 
-//include (__DIR__. "/../Utils/System.php");
+include (__DIR__. "/../Utils/System.php");
 //include (__DIR__. "/SSPVersionsService.php");
 //This requires the phar to have been extracted successfully.
 require_once (EXTRACT_DIRECTORY.'vendor/autoload.php');
@@ -68,6 +68,9 @@ class UpdateService
 		if(!$application->run($input)) {
 			$this->errros[]="No se ha podido actualizar correctamente.";
 		}
+
+		$system = new System();
+		$system->cpRecursive("./vendor/simplesamlphp/simplesamlphp", "./");
 
 	}
 
