@@ -1,122 +1,162 @@
 {
     "updater_header": {
-        "es": "Actualizador de SimpleSAMLphp"
+        "es": "Actualizador de SimpleSAMLphp",
+        "en": "SimpleSAMLphp updater"
     },
     "updater_version": {
-        "es": "Versión actualmente instalada"
+        "es": "Versión actualmente instalada",
+        "en": "Current installed version"
     },
     "updater_seleciona_version": {
-        "es": "Selecciona la versión de SimpleSAMLphp que deseas actualizar"
+        "es": "Selecciona la versión de SimpleSAMLphp que deseas actualizar",
+        "en": "Please select the desired SimpleSAMLphp version"
     },
     "updater_actualizar_version": {
-        "es": "Actualizar"
+        "es": "Actualizar",
+        "en": "Update"
     },
     "updater_backup_button": {
-        "es": "Crear copia de seguridad de la configuración de SimpleSAMLphp"
+        "es": "Crear copia de seguridad de la instalación de SimpleSAMLphp",
+        "en": "Create a backup of the current SimpleSAMLphp install"
     },
     "updater_restore_backup":{
-        "es": "Restaura una copia de seguridad de la configuración de SimpleSAMLphp"
+        "es": "Restaura una copia de seguridad de la instalación de SimpleSAMLphp",
+        "en": "Restore backup of a previous SimpleSAMLphp installation"
     },
     "updater_config_button": {
-        "es": "Guardar"
+        "es": "Guardar",
+        "en": "Save"
     },
     "updater_path": {
-        "es": "Ruta donde se almacenan los backups"
+        "es": "Ruta donde se almacenan los backups",
+        "en": "Backups store location"
     },
     "updater_latestbackup": {
-        "es": "Última copia de seguridad disponible"
+        "es": "Última copia de seguridad disponible",
+        "en": "Latest available backup"
     },
     "updater_title_actualizacion": {
-        "es": "Actualización"
+        "es": "Actualización",
+        "en": "Update"
     },
     "updater_versiones_disponibles": {
-        "es": "Versiones disponibles para actualizar"
+        "es": "Versiones disponibles para actualizar",
+        "en": "Available updates"
     },
     "updater_versiones_nota": {
-        "es": "(NOTA: la actualización no funcionará si no se han realizado copias de seguridad en los últimos 5 minutos)"
+        "es": "(NOTA: la actualización no funcionará si no se han realizado copias de seguridad en los últimos 5 minutos)",
+        "en": "(WARNING: update process won't work unles a backup has been created in the past 5 minutes)"
     },
     "updater_title_backups": {
-        "es": "Copias de seguridad"
+        "es": "Copias de seguridad",
+        "en": "Backups"
     },
     "updater_list_backups": {
-        "es": "Copias de seguridad anteriores disponibles"
+        "es": "Copias de seguridad anteriores disponibles",
+        "en": "Previous backups available"
     },
     "updater_title_info": {
-        "es": "Información sobre este módulo"
+        "es": "Información sobre este módulo",
+        "en": "Information about this module"
     },
     "updater_p1_info": {
-        "es": "Este módulo muestra información sobre la versión actualmente instalada del software, y permite realizar y restaurar copias de seguridad sobre su instancia de simpleSAMLphp."
+        "es": "Este módulo muestra información sobre la versión actualmente instalada del software, y permite realizar y restaurar copias de seguridad sobre su instancia de simpleSAMLphp.",
+        "en": "This module shows information about the currently installed version, and lets the administrator create and restore backups of SimpleSAMlphp"
     },
     "updater_p2_info": {
-        "es": "Por favor, lea la información sobre el uso de este módulo, y tome precauciones antes de hacer una actualización. Si su instalación depende de bases de datos, realice copia de seguridad de las mismas."
+        "es": "Por favor, lea la documentación sobre el uso de este módulo, y tome precauciones antes de hacer una actualización. Si su instalación depende de bases de datos, realice copia de seguridad de las mismas.",
+        "en": "Please, carefully read the documentation available for this module, and take precautions before updating. If your installation depends on databases, please also create a separate backup of them."
     },
     "updater_btn_update": {
-        "es": "Actualizar a la versión seleccionada"
+        "es": "Actualizar a la versión seleccionada",
+        "en": "Update to the selected version"
     },
     "updater_btn_backup": {
-        "es": "Realizar una nueva copia de seguridad"
+        "es": "Realizar una nueva copia de seguridad",
+        "en": "Create a new backup"
     },
     "updater_btn_restore": {
-        "es": "Restaurar la copia de seguridad seleccionada"
+        "es": "Restaurar la copia de seguridad seleccionada",
+        "en": "Restore selected backup"
     },
     "updater_btn_delete": {
-        "es": "Eliminar la copia de seguridad seleccionada"
+        "es": "Eliminar la copia de seguridad seleccionada",
+        "en": "Delete selected backup"
     },
     "updater_confirm_dialog": {
-        "es": "¿Estás seguro de que quieres eliminar la copia de seguridad seleccionada?"
+        "es": "¿Estás seguro de que quieres eliminar la copia de seguridad seleccionada?",
+        "en": "Are you sure to permanently remove the selected backup?"
     },
     "updater_error_noexist": {
-        "es": "No existe el directorio"
+        "es": "No existe el directorio",
+        "en": "Directory does not exist"
     },
     "updater_error_directory": {
-        "es": "El directorio"
+        "es": "El directorio",
+        "en": "Directory"
     },
     "updater_error_access": {
-        "es": "no tiene permiso de escritura para el usuario apache:apache"
+        "es": "no tiene permiso de escritura para el usuario najo el que se ejecuta el servidor web",
+        "en": "is not writable by the web server process user"
     },
     "updater_success_backup": {
-        "es": "La copia de seguridad"
+        "es": "La copia de seguridad",
+        "en": "Backup"
     },
     "updater_success_delete": {
-        "es": "se ha eliminado correctamente"
+        "es": "se ha eliminado correctamente",
+        "en": "has been removed"
     },
     "updater_success_make": {
-        "es": "se ha realizado correctamente"
+        "es": "se ha realizado correctamente",
+        "en": "was successfully created"
     },
     "updater_success_restore": {
-        "es": "se ha restaurado correctamente"
+        "es": "se ha restaurado correctamente",
+        "en": "was restored correctly"
     },
     "updater_error_invalid_backup": {
-        "es": "La copia de seguridad tiene un formato incorrecto"
+        "es": "La copia de seguridad tiene un formato incorrecto",
+        "en": "Backup is in an unknown format"
     },
     "updater_error_params": {
-        "es": "Parametros invalidos"
+        "es": "Parametros invalidos",
+        "en": "Invalid parameters"
     },
     "updater_error_params": {
-        "es": "No se ha podido crear el directorio"
+        "es": "No se ha podido crear el directorio",
+        "en": "Directory could not be created"
     },
     "updater_config_file_error": {
-        "es": "No se ha podido encontrar el fichero de configuración de este modulo. Deberia estar en: "
+        "es": "No se ha podido encontrar el fichero de configuración de este modulo. Deberia estar en: ",
+        "en": "A configuration file for this module was not found. This file should exist under: "
     },
     "updater_config_param_error": {
-        "es": "No existe el parametro 'backup_path' en el fichero de configuración. "
+        "es": "No existe el parametro 'backup_path' en el fichero de configuración. ",
+        "en": "Parameter 'backup_path' wasn't found in the module configuration"
     },
     "updater_config_path_error": {
-        "es": "No existe el directorio configurado para la gestion de las copias de seguridad. "
+        "es": "No existe el directorio configurado para la gestion de las copias de seguridad. ",
+        "en": "Configured backup directory does not exist. "
     },
     "updater_config_path_perm": {
-        "es": "El directorio configurado para la gestión de copias de seguridad no tiene permisos de lectura. "
+        "es": "El directorio configurado para la gestión de copias de seguridad no tiene permisos de lectura. ",
+        "en": "Configured backup directory can not be read. "
     },
     "updater_no_backups": {
-        "es": "No existe ninguna copia de seguridad"
+        "es": "No existe ninguna copia de seguridad",
+        "en": "No previus backup available"
     },
     "updater_link": {
-        "es": "Gestor de actualizaciones"
+        "es": "Actualización de SimpleSAMLphp",
+        "en": "SimpleSAMLphp update"
     },
     "updater_breadcrumbs_config": {
-        "es": "Configuración"
+        "es": "Configuración",
+        "en": "Configuration"
     },
     "updater_breadcrumbs_updater": {
-        "es": "Actualización de SimpleSAMLphp"
+        "es": "Actualización de SimpleSAMLphp",
+        "en": "SimpleSAMLphp update"
     }
 }

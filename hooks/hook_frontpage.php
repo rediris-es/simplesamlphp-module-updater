@@ -11,7 +11,7 @@ function updater_hook_frontpage(&$links)
     assert(array_key_exists('links', $links));
     $links['config']['sanitycheck'] = array(
         'href' => SimpleSAML\Module::getModuleURL('updater/index.php'),
-        'text' => 'Gestor de actualizaciones',
+        'text' => 'Actualización de SimpleSAMLphp',
     );
 
 
