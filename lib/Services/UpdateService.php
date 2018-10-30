@@ -69,9 +69,9 @@ class UpdateService
 			$this->errros[]="No se ha podido actualizar correctamente.";
 		}
 
-		$system = new System();
+		/*$system = new System();
 		$system->cpRecursive("./vendor/simplesamlphp/simplesamlphp", "./");
-		$system->rmRecursive("./vendor");
+		$system->rmRecursive("./vendor");*/
 	}
 
 }
