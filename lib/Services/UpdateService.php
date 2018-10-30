@@ -71,7 +71,7 @@ class UpdateService
 
 		$system = new System();
 		$system->cpRecursive("./vendor/simplesamlphp/simplesamlphp", "./");
-
+		$system->rmRecursive("./vendor");
 	}
 
 }
