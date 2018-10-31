@@ -70,7 +70,13 @@ class UpdateService
 			$this->errros[]="No se ha podido actualizar correctamente.";
 		}
 
+		$system = new System();
 		exec('\cp -r ./vendor/simplesamlphp/simplesamlphp/* ./simplesamlphp');
+		$system->rmRecursive("./vendor");
+		chdir('simplesamlphp');
+		exec('composer install');
+		exec('composer dump-autoload -a');
+		exec('composer require composer/composer:dev-master');
 		var_dump($stream);
 		//shell_exec('composer update');
 		//$system->rmRecursive("./vendor");
