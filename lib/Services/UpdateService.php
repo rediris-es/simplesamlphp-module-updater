@@ -76,17 +76,15 @@ class UpdateService
 
 		file_put_contents("composer.json", $composerData);
 
-		
+
 
 		putenv('COMPOSER_HOME=' . __DIR__ . '/../vendor/bin/composer');
 		//Create the commands
 		$input = new ArrayInput(array('command' => 'update'));
-		$stream = fopen('php://temp', 'w+');
-    	$output = new StreamOutput($stream);
 		//Create the application and run it with the commands
 		$application = new Application();
 		$application->setAutoExit(false);
-		if(!$application->run($input, $output)) {
+		if(!$application->run($input)) {
 			$this->errros[]="No se ha podido actualizar correctamente.";
 		}
 
