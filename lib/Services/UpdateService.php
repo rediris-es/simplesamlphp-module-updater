@@ -61,7 +61,7 @@ class UpdateService
 		putenv('COMPOSER_HOME=' . __DIR__ . '/../vendor/bin/composer');
 		//Create the commands
 		$input = new ArrayInput(array('command' => 'update'));
-		/*$stream = fopen('php://temp', 'w+');
+		$stream = fopen('php://temp', 'w+');
     	$output = new StreamOutput($stream);
 		//Create the application and run it with the commands
 		$application = new Application();
@@ -70,10 +70,9 @@ class UpdateService
 			$this->errros[]="No se ha podido actualizar correctamente.";
 		}
 
-		$system = new System();
-		$system->cpRecursive("./vendor/simplesamlphp/simplesamlphp", "./");
-		var_dump($stream);*/
-		shell_exec('composer update');
+		exec('\cp -r ./vendor/simplesamlphp/simplesamlphp/* ./simplesamlphp');
+		var_dump($stream);
+		//shell_exec('composer update');
 		//$system->rmRecursive("./vendor");
 	}
 
