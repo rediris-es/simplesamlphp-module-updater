@@ -57,7 +57,27 @@ class UpdateService
 		
 		// change out of the webroot so that the vendors file is not created in
 		// a place that will be visible to the intahwebz
+
+		preg_match('!\(([^\)]+)\)!', $version, $match);
+		$version = $match[0];
+
+
+
 		chdir('../../');
+
+		rename('composer.json', 'composer.back.json');
+
+		$composerData = file_get_contents('./composer.back.json');
+
+		$composerArray = json_decode($composerData);
+		$composerArray['require']['simplesamlphp/simplesamlphp'] = $version;
+
+		$composerData = json_encode($composerArray);
+
+		file_put_contents("composer.json", $composerData);
+
+		
+
 		putenv('COMPOSER_HOME=' . __DIR__ . '/../vendor/bin/composer');
 		//Create the commands
 		$input = new ArrayInput(array('command' => 'update'));
@@ -71,13 +91,25 @@ class UpdateService
 		}
 
 		$system = new System();
-		exec('\cp -r ./vendor/simplesamlphp/simplesamlphp/* ./simplesamlphp');
+		exec('\cp -r ./vendor/simplesamlphp/simplesamlphp/* ./simplesamlphp', $output, $return);
+		if (!$return) {
+		    $this->errros[]="No se ha podido actualizar correctamente.";
+		}
 		$system->rmRecursive("./vendor");
 		chdir('simplesamlphp');
-		exec('composer install');
-		exec('composer dump-autoload -a');
-		exec('composer require composer/composer:dev-master');
-		var_dump($stream);
+
+		exec('composer install', $output, $return);
+		if (!$return) {
+		    $this->errros[]="No se ha podido actualizar correctamente.";
+		}
+		exec('composer dump-autoload -a', $output, $return);
+		if (!$return) {
+		    $this->errros[]="No se ha podido actualizar correctamente.";
+		}
+		exec('composer require composer/composer:dev-master', $output, $return);
+		if (!$return) {
+		    $this->errros[]="No se ha podido actualizar correctamente.";
+		}
 		//shell_exec('composer update');
 		//$system->rmRecursive("./vendor");
 	}
