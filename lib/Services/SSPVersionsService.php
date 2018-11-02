@@ -35,7 +35,8 @@ class SSPVersionsService
 
 	        $entryFeed = $xmlFeed->channel->item[$i];
 
-	        if(strcmp($entryFeed->title, "simplesamlphp/simplesamlphp (v".$this->currentVersion.")")===0){
+	        if(strcmp($entryFeed->title, "simplesamlphp/simplesamlphp (v".$this->currentVersion.")")===0
+	        	|| strcmp($entryFeed->title, "simplesamlphp/simplesamlphp (".$this->currentVersion.")")===0){
 	            $final = true;
 	        }else{
 	            array_push($itemsFeed, $entryFeed);

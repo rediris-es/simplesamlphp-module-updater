@@ -60,23 +60,31 @@ class UpdateService
 
 		preg_match('!\(([^\)]+)\)!', $version, $match);
 		$version = $match[0];
+		$version = str_replace("(", "", $version);
+		$version = str_replace(")", "", $version);
 
+		if(!chdir('../../')){
+			$this->errros[]="No se ha podido actualizar correctamente.";
+			return false;
+		}
 
-
-		chdir('../../');
-
-		rename('composer.json', 'composer.back.json');
+		if(!copy('composer.json', 'composer.back.json')){
+			$this->errros[]="No se ha podido actualizar correctamente.";
+			return false;
+		}
 
 		$composerData = file_get_contents('./composer.back.json');
 
-		$composerArray = json_decode($composerData);
+		$composerArray = json_decode($composerData, true);
 		$composerArray['require']['simplesamlphp/simplesamlphp'] = $version;
 
 		$composerData = json_encode($composerArray);
 
-		file_put_contents("composer.json", $composerData);
-
-
+		//touch('composer.json');
+		if(file_put_contents("composer.json", $composerData)===FALSE){
+			$this->errros[]="No se ha podido actualizar correctamente.";
+			return false;
+		}
 
 		putenv('COMPOSER_HOME=' . __DIR__ . '/../vendor/bin/composer');
 		//Create the commands
@@ -86,28 +94,62 @@ class UpdateService
 		$application->setAutoExit(false);
 		if(!$application->run($input)) {
 			$this->errros[]="No se ha podido actualizar correctamente.";
+			return false;
 		}
 
 		$system = new System();
 		exec('\cp -r ./vendor/simplesamlphp/simplesamlphp/* ./simplesamlphp', $output, $return);
 		if (!$return) {
 		    $this->errros[]="No se ha podido actualizar correctamente.";
+		    return false;
 		}
-		$system->rmRecursive("./vendor");
-		chdir('simplesamlphp');
 
-		exec('composer install', $output, $return);
+		if (file_exists('vendor')) {
+			$system->rmRecursive("vendor");
+		}else{
+			$this->errros[]="No se ha podido actualizar correctamente.";
+		    return false;
+		}
+		
+		if(!chdir('simplesamlphp')){
+			$this->errros[]="No se ha podido actualizar correctamente.";
+			return false;
+		}
+
+		$input = new ArrayInput(array('command' => 'install'));
+		if(!$application->run($input)) {
+			$this->errros[]="No se ha podido actualizar correctamente.";
+			return false;
+		}
+		//exec('composer install', $output, $return);
+		/*if (!$return) {
+		    $this->errros[]="No se ha podido actualizar correctamente.";
+		}*/
+
+		$input = new ArrayInput(array('command' => 'dump-autoload -a'));
+		if(!$application->run($input)) {
+			$this->errros[]="No se ha podido actualizar correctamente.";
+			return false;
+		}
+		/*exec('composer dump-autoload -a', $output, $return);
 		if (!$return) {
 		    $this->errros[]="No se ha podido actualizar correctamente.";
+		}*/
+
+		$input = new ArrayInput(array('command' => 'require composer/composer:dev-master'));
+		if(!$application->run($input)) {
+			$this->errros[]="No se ha podido actualizar correctamente.";
+			return false;
 		}
-		exec('composer dump-autoload -a', $output, $return);
+
+		if(!rename('composer.back.json', 'composer.json')){
+			$this->errros[]="No se ha podido actualizar correctamente.";
+			return false;
+		}
+		/*exec('composer require composer/composer:dev-master', $output, $return);
 		if (!$return) {
 		    $this->errros[]="No se ha podido actualizar correctamente.";
-		}
-		exec('composer require composer/composer:dev-master', $output, $return);
-		if (!$return) {
-		    $this->errros[]="No se ha podido actualizar correctamente.";
-		}
+		}*/
 		//shell_exec('composer update');
 		//$system->rmRecursive("./vendor");
 	}

@@ -91,7 +91,7 @@
                    <label><?php echo $this->t('{updater:updater:updater_version}'); ?>:</label>
                </div>
                <div class="float-r">
-                   <input readonly="readonly" style="width: 100px; text-align: right; " value="<?php echo $this->data['sir']['currentVersion']; ?>">
+                   <input id="currentVersion" readonly="readonly" style="width: 100px; text-align: right; " value="<?php echo $this->data['sir']['currentVersion']; ?>">
                </div>
                <div style="clear: both;"></div>
            </div>
@@ -125,11 +125,15 @@
                      <label><?php echo $this->t('{updater:updater:updater_versiones_disponibles}'); ?>:</label>
                  </div>
                  <div class="float-r">
-                     <select id="simplesamlphp_version" name="simplesamlphp_version">
-                         <?php foreach ($this->data['sir']['versions'] as $key => $value) { ?>
-                              <option value="<?php echo $value->title; ?>"><?php echo $value->title; ?></option>
-                          <?php } ?>
-                     </select>
+                    <?php if(count($this->data['sir']['versions'])): ?>
+                         <select id="simplesamlphp_version" name="simplesamlphp_version">
+                             <?php foreach ($this->data['sir']['versions'] as $key => $value) { ?>
+                                  <option value="<?php echo $value->title; ?>"><?php echo $value->title; ?></option>
+                              <?php } ?>
+                         </select>
+                    <?php else: ?>
+                        <label>Ya tienes la versión más reciente</label>
+                    <?php endif; ?>
                  </div>
                  <div style="clear: both;"></div>
              </div>
@@ -204,39 +208,52 @@
 
     function update(){
 
-        var version = document.getElementById("simplesamlphp_version").value;
+        var versionElement = document.getElementById("simplesamlphp_version");
+        if(versionElement!=null){
 
-        $("#status-msg").html("");
-        $("#loader-msg").html("Se está actualizando a la versión " + version + " de SimpleSAMLphp");
+            var version = versionElement.value;
 
-        $.ajax({
-            type: "POST",
-            url: "update.php",
-            data: $('#form-update').serialize(),
-            dataType: "json",
-            beforeSend: function() {
-                toggleModal();
-                $('#loader, #loader-msg').show();
-            },
-            complete: function() {
-                $('#loader, #loader-msg').hide();
-            },
-            success: function(data) {
-                if(data.error==1){
-                    for(var i=0; i<data.errors.length; i++){
-                        $("#status-msg").append(data.errors[i]);
-                        $("#status-msg").append("<br/>");
+            $("#status-msg").html("");
+            $("#loader-msg").html("Se está actualizando a la versión " + version + " de SimpleSAMLphp");
+
+            $.ajax({
+                type: "POST",
+                url: "update.php",
+                data: $('#form-update').serialize(),
+                dataType: "json",
+                beforeSend: function() {
+                    toggleModal();
+                    $('#loader, #loader-msg').show();
+                },
+                complete: function() {
+                    $('#loader, #loader-msg').hide();
+                },
+                success: function(data) {
+                    if(data.error==1){
+                        for(var i=0; i<data.errors.length; i++){
+                            $("#status-msg").append(data.errors[i]);
+                            $("#status-msg").append("<br/>");
+                        }
+                       
+                    }else{
+                        $("#status-msg").text("SimpleSAMLphp actualizado correctamente");
+                        document.getElementById("currentVersion").val = data.data.currentVersion;
+                        if(data.data.recentVersions.length>0){
+                            reloadListById('simplesamlphp_version', data.data.recentVersions);
+                        }else{
+                            versionElement.style.display = "none";
+                            versionElement.after("<label>Ya tienes la versión más reciente</label>");
+                        }
                     }
-                }else{
-                    $("#status-msg").text("SimpleSAMLphp actualizado correctamente");
-
+                },
+                error: function() {
+                    console.log("No se ha podido actualizar correctamente");
                 }
-
-            },
-            error: function() {
-                console.log("No se ha podido obtener la información");
-            }
-        });
+            });
+        }else{
+            alert("Ya tienes instalada la versión más reciente");
+        }
+        
 
     }
 
@@ -267,7 +284,7 @@
                 }else{
                     $("#status-msg").text("Copia de seguridad creada correctamente");
                     reloadLastBackup(data.lastBackup);
-                    reloadBackupList(data.backups);
+                    reloadListById('backups', data.backups);
                 }
 
             },
@@ -310,7 +327,7 @@
                     }else{
                         $("#status-msg").text("Copia de seguridad " + backup + " eliminada correctamente");
                         reloadLastBackup(data.lastBackup);
-                        reloadBackupList(data.backups);
+                        reloadListById('backups', data.backups);
                     }
                     
                 },
@@ -380,11 +397,11 @@
         $("#lastBackup").val(lastBackup);
     }
 
-    function reloadBackupList(backupList){
-        $('#backups').find('option').remove();
+    function reloadListById(id, list){
+        $('#'+id).find('option').remove();
 
-        for(var i=0; i<backupList.length; i++){
-            $('#backups').append('<option value="' + backupList[i] + '">' + backupList[i] + '</option>');  
+        for(var i=0; i<list.length; i++){
+            $('#'+id).append('<option value="' + list[i] + '">' + list[i] + '</option>');  
         }
         
     }

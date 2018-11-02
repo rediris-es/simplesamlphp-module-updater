@@ -58,6 +58,43 @@ class BackupService
     	}
     }
 
+    public function check5minBackup(){
+    	$datetime = date('Ymd H:i:s');
+    	$this->getBackups();
+
+    	$i = 0;
+    	$countBackups = count($this->backups);
+    	$backup5min = false;
+
+    	while($i<$countBackups && $backup5min==false) {
+    		
+    		$backup = $this->backups[$i];
+
+    		$backupParts = explode(" - ", $backup);
+
+    		$fechaBackup = $backupParts[count($backupParts)-2];
+    		$horaBackup = $backupParts[count($backupParts)-1];
+
+    		$currentDate = new DateTime($datetime);
+    		$backupDate = new DateTime($fechaBackup." ".$horaBackup);
+
+    		$diff = $currentDate->diff($backupDate);
+
+    		$seconds = $diff->days * 24 * 60 * 60;
+			$seconds += $diff->h * 60 * 60;
+			$seconds += $diff->i * 60;
+			$seconds += $diff->s;
+    		
+			if($seconds<=300){
+				$backup5min = true;
+			}	
+
+    		$i++;
+    	}
+
+    	return $backup5min;
+    }
+
     public function createBackup(){
 
     	$datetime = date('Ymd - H:i:s');
