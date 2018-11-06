@@ -18,6 +18,7 @@ use SimpleSAML\Modules\Updater\Services\SSPVersionsService;*/
 
 
 use SimpleSAML\Module;
+use SimpleSAML\Configuration;
 
 //include (__DIR__. "/../Utils/System.php");
 //include (__DIR__. "/SSPVersionsService.php");
@@ -29,9 +30,11 @@ class BackupService
 	public $configData;
 	public $errors;
 	public $backups = array();
+	public $config;
     
     public function __construct() {
         $this->checkRequeriments();
+        $this->config = SimpleSAML_Configuration::getInstance();
     }
     
     private function checkConfigFile() {
@@ -42,16 +45,16 @@ class BackupService
 
     	$this->configData = $this->checkConfigFile();
     	if(!$this->configData) {
-    		$this->errors[]="No existe el fichero de configuracion";
+    		$this->errors[]=$config->t('{updater:updater:updater_config_file_error}')." ".realpath(__DIR__ . '/../../../config/'.$this->configPath);
     	} else {
     		if($this->configData->getString('backup_path')===null) {
-	    		$this->errors[]="No existe el parametro 'backup_path'";
+	    		$this->errors[]=$config->t('{updater:updater:updater_config_param_error}');
 	    	} else {
 	    		if(!file_exists($this->configData->getString('backup_path'))) {
-		    		$this->errors[]="No existe el directorio indicado en la configuración";
+		    		$this->errors[]=$config->t('{updater:updater:updater_error_noexist}')." ".$this->configData->getString('backup_path');
 		    	} else {
 		    		if(!is_writable($this->configData->getString('backup_path'))) {
-			    		$this->errors[]="El directorio indicado en la configuración no tiene permisos de escritura para el usuario apache:apache";
+			    		$this->errors[]=$config->t('{updater:updater:updater_error_directory}')." ".$this->configData->getString('backup_path')." ".$config->t('{updater:updater:updater_error_access}');
 			    	}
 		    	}
 	    	}
@@ -103,7 +106,7 @@ class BackupService
 
 		if(!mkdir($backup_path)){
 
-			$this->errors []= "No se ha podido crear el directorio";
+			$this->errors []= $config->t('{updater:updater:updater_error_params}')." ".$backup_path;
 
 		}else{
 
@@ -180,7 +183,7 @@ class BackupService
 				$system->rmRecursive($backup);
 
 			} else {
-				$this->errors []= "No se pudo abrir la copia de seguridad";
+				$this->errors []= $config->t('{updater:updater:updater_open_backup_error}');
 			}
 
     	//}
@@ -190,10 +193,10 @@ class BackupService
     public function deleteBackup($backupPath){
 
     	if (!file_exists($backupPath.".zip")) {
-			$this->errors []= "No existe la copia de seguridad.";
+			$this->errors []= $config->t('{updater:updater:updater_no_exist_backup}');
 		}else{
 			if(!is_writable($backupPath.".zip")){
-				$this->errors []= "El fichero no puede eliminarse, comprueba que tiene los permisos adecuados.";
+				$this->errors []= $config->t('{updater:updater:updater_delete_backup_error}');
 			}else{
 				$system = new System();
 				unlink($backupPath.".zip");

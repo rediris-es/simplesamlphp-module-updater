@@ -132,7 +132,7 @@
                               <?php } ?>
                          </select>
                     <?php else: ?>
-                        <label>Ya tienes la versión más reciente</label>
+                        <label><?php echo $this->t('{updater:updater:updater_simplesamlphp_updated}'); ?></label>
                     <?php endif; ?>
                  </div>
                  <div style="clear: both;"></div>
@@ -214,7 +214,7 @@
             var version = versionElement.value;
 
             $("#status-msg").html("");
-            $("#loader-msg").html("Se está actualizando a la versión " + version + " de SimpleSAMLphp");
+            $("#loader-msg").html("<?php $this->t('{updater:updater:updater_simplesamlphp_updated}'); ?> " + version + " <?php $this->t('{updater:updater:update_process_simplesamlphp}'); ?>");
 
             $.ajax({
                 type: "POST",
@@ -236,22 +236,22 @@
                         }
                        
                     }else{
-                        $("#status-msg").text("SimpleSAMLphp actualizado correctamente");
+                        $("#status-msg").text("<?php echo $this->t('{updater:updater:updater_simplesamlphp_updated}'); ?>");
                         document.getElementById("currentVersion").val = data.data.currentVersion;
                         if(data.data.recentVersions.length>0){
                             reloadListById('simplesamlphp_version', data.data.recentVersions);
                         }else{
                             versionElement.style.display = "none";
-                            versionElement.after("<label>Ya tienes la versión más reciente</label>");
+                            versionElement.after("<label><?php echo $this->t('{updater:updater:updater_simplesamlphp_updated}'); ?></label>");
                         }
                     }
                 },
                 error: function() {
-                    console.log("No se ha podido actualizar correctamente");
+                    console.log("<?php echo $this->t('{updater:updater:updater_update_error}'); ?>");
                 }
             });
         }else{
-            alert("Ya tienes instalada la versión más reciente");
+            alert("<?php echo $this->t('{updater:updater:updater_simplesamlphp_updated}'); ?>");
         }
         
 
@@ -261,7 +261,7 @@
 
 
         $("#status-msg").html("");
-        $("#loader-msg").html("Se está creando una nueva copia de seguridad, espere unos segundos...");
+        $("#loader-msg").html("<?php echo $this->t('{updater:updater:updater_process_create_backup}'); ?>, <?php echo $this->t('{updater:updater:updater_process_wait_seconds}'); ?>...");
 
         $.ajax({
             type: "POST",
@@ -282,14 +282,14 @@
                         $("#status-msg").append("<br/>");
                     }
                 }else{
-                    $("#status-msg").text("Copia de seguridad creada correctamente");
+                    $("#status-msg").text("<?php echo $this->t('{updater:updater:updater_success_backup}').$this->t('{updater:updater:updater_success_make}'); ?>");
                     reloadLastBackup(data.lastBackup);
                     reloadListById('backups', data.backups);
                 }
 
             },
             error: function() {
-                console.log("No se ha podido obtener la información");
+                console.log("<?php echo $this->t('{updater:updater:updater_update_error}'); ?>");
             }
         });
     }
@@ -299,7 +299,7 @@
         var backup = document.getElementById("backups").value;
 
         $("#status-msg").html("");
-        $("#loader-msg").html("Se está eliminando la copia de seguridad " + backup + ", espere unos segundos...");
+        $("#loader-msg").html("<?php echo $this->t('{updater:updater:updater_process_delete_backup}'); ?> " + backup + ", <?php echo $this->t('{updater:updater:updater_process_wait_seconds}'); ?>...");
 
         if (window.confirm("<?php echo $this->t('{updater:updater:updater_confirm_dialog}'); ?>")) { 
 
@@ -325,14 +325,14 @@
                             $("#status-msg").append("<br/>");
                         }
                     }else{
-                        $("#status-msg").text("Copia de seguridad " + backup + " eliminada correctamente");
+                        $("#status-msg").text("<?php echo $this->t('{updater:updater:updater_success_backup}').$this->t('{updater:updater:updater_success_delete}'); ?>");
                         reloadLastBackup(data.lastBackup);
                         reloadListById('backups', data.backups);
                     }
                     
                 },
                 error: function() {
-                    console.log("No se ha podido obtener la información");
+                    console.log("<?php echo $this->t('{updater:updater:updater_update_error}'); ?>");
                 }
             });
 
@@ -352,7 +352,7 @@
 
         document.getElementById("selected_backup_restore").value = encodeURIComponent(backup);
 
-        $("#loader-msg").html("Se está restaurando la copia de seguridad " + backup + ", espere unos segundos...");
+        $("#loader-msg").html("<?php echo $this->t('{updater:updater:updater_process_restore_backup}'); ?> " + backup + ", <?php echo $this->t('{updater:updater:updater_process_wait_seconds}'); ?>...");
         $("#status-msg").html("");
 
         $.ajax({
@@ -375,7 +375,7 @@
                         $("#status-msg").append("<br/>");
                     }
                 }else{
-                    $("#status-msg").text("Copia de seguridad " + backup + " restaurada correctamente");
+                    $("#status-msg").text("<?php echo $this->t('{updater:updater:updater_success_backup}').$this->t('{updater:updater:updater_success_restore}'); ?>");
                 }
                 
             },

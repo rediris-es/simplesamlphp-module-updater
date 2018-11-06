@@ -20,6 +20,7 @@ ini_set('memory_limit','-1');
 define('EXTRACT_DIRECTORY', "../");
 
 use SimpleSAML\Module;
+use SimpleSAML\Configuration;
 
 include (__DIR__. "/../Utils/System.php");
 //include (__DIR__. "/SSPVersionsService.php");
@@ -38,9 +39,10 @@ class UpdateService
 	public $configData;
 	public $errors;
 	public $backups = array();
+	public $config;
     
     public function __construct() {
-        
+        $this->config = SimpleSAML_Configuration::getInstance();
     }
     
    	public function updateSSPVersion($version){
@@ -64,12 +66,12 @@ class UpdateService
 		$version = str_replace(")", "", $version);
 
 		if(!chdir('../../')){
-			$this->errros[]="No se ha podido actualizar correctamente.";
+			$this->errors[]=$config->t('{updater:updater:updater_update_error}');
 			return false;
 		}
 
 		if(!copy('composer.json', 'composer.back.json')){
-			$this->errros[]="No se ha podido actualizar correctamente.";
+			$this->errors[]=$config->t('{updater:updater:updater_update_error}');
 			return false;
 		}
 
@@ -82,7 +84,7 @@ class UpdateService
 
 		//touch('composer.json');
 		if(file_put_contents("composer.json", $composerData)===FALSE){
-			$this->errros[]="No se ha podido actualizar correctamente.";
+			$this->errors[]=$config->t('{updater:updater:updater_update_error}');
 			return false;
 		}
 
@@ -93,32 +95,32 @@ class UpdateService
 		$application = new Application();
 		$application->setAutoExit(false);
 		if(!$application->run($input)) {
-			$this->errros[]="No se ha podido actualizar correctamente.";
+			$this->errors[]=$config->t('{updater:updater:updater_update_error}');
 			return false;
 		}
 
 		$system = new System();
 		exec('\cp -r ./vendor/simplesamlphp/simplesamlphp/* ./simplesamlphp', $output, $return);
 		if (!$return) {
-		    $this->errros[]="No se ha podido actualizar correctamente.";
+		    $this->errors[]=$config->t('{updater:updater:updater_update_error}');
 		    return false;
 		}
 
 		if (file_exists('vendor')) {
 			$system->rmRecursive("vendor");
 		}else{
-			$this->errros[]="No se ha podido actualizar correctamente.";
+			$this->errors[]=$config->t('{updater:updater:updater_update_error}');
 		    return false;
 		}
 		
 		if(!chdir('simplesamlphp')){
-			$this->errros[]="No se ha podido actualizar correctamente.";
+			$this->errors[]=$config->t('{updater:updater:updater_update_error}');
 			return false;
 		}
 
 		$input = new ArrayInput(array('command' => 'install'));
 		if(!$application->run($input)) {
-			$this->errros[]="No se ha podido actualizar correctamente.";
+			$this->errors[]=$config->t('{updater:updater:updater_update_error}');
 			return false;
 		}
 		//exec('composer install', $output, $return);
@@ -128,7 +130,7 @@ class UpdateService
 
 		$input = new ArrayInput(array('command' => 'dump-autoload -a'));
 		if(!$application->run($input)) {
-			$this->errros[]="No se ha podido actualizar correctamente.";
+			$this->errors[]=$config->t('{updater:updater:updater_update_error}');
 			return false;
 		}
 		/*exec('composer dump-autoload -a', $output, $return);
@@ -138,12 +140,12 @@ class UpdateService
 
 		$input = new ArrayInput(array('command' => 'require composer/composer:dev-master'));
 		if(!$application->run($input)) {
-			$this->errros[]="No se ha podido actualizar correctamente.";
+			$this->errors[]=$config->t('{updater:updater:updater_update_error}');
 			return false;
 		}
 
 		if(!rename('composer.back.json', 'composer.json')){
-			$this->errros[]="No se ha podido actualizar correctamente.";
+			$this->errors[]=$config->t('{updater:updater:updater_update_error}');
 			return false;
 		}
 		/*exec('composer require composer/composer:dev-master', $output, $return);

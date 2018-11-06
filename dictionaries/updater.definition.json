@@ -87,6 +87,10 @@
         "es": "¿Estás seguro de que quieres eliminar la copia de seguridad seleccionada?",
         "en": "Are you sure to permanently remove the selected backup?"
     },
+    "updater_simplesamlphp_updated": {
+        "es": "Ya tienes la versión más reciente",
+        "en": "SimpleSAMLphp is updated"
+    },
     "updater_error_noexist": {
         "es": "No existe el directorio",
         "en": "Directory does not exist"
@@ -96,7 +100,7 @@
         "en": "Directory"
     },
     "updater_error_access": {
-        "es": "no tiene permiso de escritura para el usuario najo el que se ejecuta el servidor web",
+        "es": "no tiene permiso de escritura para el usuario bajo el que se ejecuta el servidor web",
         "en": "is not writable by the web server process user"
     },
     "updater_success_backup": {
@@ -114,6 +118,22 @@
     "updater_success_restore": {
         "es": "se ha restaurado correctamente",
         "en": "was restored correctly"
+    },
+    "updater_process_create_backup": {
+    	"es": "Se está creando una nueva copia de seguridad",
+    	"es": "The backup is being created"
+    },
+    "updater_process_restore_backup": {
+    	"es": "Se está restaurando la copia de seguridad",
+    	"es": "The backup is being restored"
+    },
+    "updater_process_delete_backup": {
+    	"es": "Se está eliminando la copia de seguridad",
+    	"es": "The backup is being deleted"
+    },
+    "updater_process_wait_seconds": {
+    	"es": "espere unos segundos",
+    	"es": "wait few seconds"
     },
     "updater_error_invalid_backup": {
         "es": "La copia de seguridad tiene un formato incorrecto",
@@ -139,13 +159,41 @@
         "es": "No existe el directorio configurado para la gestion de las copias de seguridad. ",
         "en": "Configured backup directory does not exist. "
     },
+    "updater_open_backup_error": {
+    	"es": "No se pudo abrir la copia de seguridad.",
+        "en": "Can not open backup. "
+    },
+    "updater_delete_backup_error": {
+    	"es": "El fichero no puede eliminarse, comprueba que tiene los permisos adecuados.",
+        "en": "File can not delete, test if file have correct permissions. "
+    },
     "updater_config_path_perm": {
         "es": "El directorio configurado para la gestión de copias de seguridad no tiene permisos de lectura. ",
         "en": "Configured backup directory can not be read. "
     },
+    "updater_no_exist_backup": {
+        "es": "No existe la copia de seguridad",
+        "en": "No backup available"
+    },
     "updater_no_backups": {
         "es": "No existe ninguna copia de seguridad",
         "en": "No previus backup available"
+    },
+    "update_process_simplesamlphp": {
+    	"es": "de SimpleSAMLphp",
+    	"en": "of SimpleSAMLphp"
+    },
+    "update_process_ok": {
+    	"es": "SimpleSAMLphp actualizado correctamente",
+    	"en": "SimpleSAMLphp updated correctly"
+    },
+    "updater_process_update": {
+    	"es": "Se está actualizando a la versión",
+    	"en": "Updating to version"
+    },
+    "updater_update_error": {
+        "es": "No se ha podido actualizar correctamente.",
+        "en": "Can not update correctly."
     },
     "updater_link": {
         "es": "Actualización de SimpleSAMLphp",
