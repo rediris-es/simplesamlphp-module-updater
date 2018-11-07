@@ -214,7 +214,7 @@
             var version = versionElement.value;
 
             $("#status-msg").html("");
-            $("#loader-msg").html("<?php $this->t('{updater:updater:updater_simplesamlphp_updated}'); ?> " + version + " <?php $this->t('{updater:updater:update_process_simplesamlphp}'); ?>");
+            $("#loader-msg").html("<?php echo $this->t('{updater:updater:updater_process_update}'); ?> " + version + " <?php echo $this->t('{updater:updater:update_process_simplesamlphp}'); ?>");
 
             $.ajax({
                 type: "POST",

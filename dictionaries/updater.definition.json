@@ -121,19 +121,19 @@
     },
     "updater_process_create_backup": {
     	"es": "Se está creando una nueva copia de seguridad",
-    	"es": "The backup is being created"
+    	"en": "The backup is being created"
     },
     "updater_process_restore_backup": {
     	"es": "Se está restaurando la copia de seguridad",
-    	"es": "The backup is being restored"
+    	"en": "The backup is being restored"
     },
     "updater_process_delete_backup": {
     	"es": "Se está eliminando la copia de seguridad",
-    	"es": "The backup is being deleted"
+    	"en": "The backup is being deleted"
     },
     "updater_process_wait_seconds": {
     	"es": "espere unos segundos",
-    	"es": "wait few seconds"
+    	"en": "wait few seconds"
     },
     "updater_error_invalid_backup": {
         "es": "La copia de seguridad tiene un formato incorrecto",

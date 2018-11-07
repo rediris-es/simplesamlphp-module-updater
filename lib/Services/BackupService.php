@@ -45,16 +45,16 @@ class BackupService
 
     	$this->configData = $this->checkConfigFile();
     	if(!$this->configData) {
-    		$this->errors[]=$config->t('{updater:updater:updater_config_file_error}')." ".realpath(__DIR__ . '/../../../config/'.$this->configPath);
+    		$this->errors[]=$this->translation->t('{updater:updater:updater_config_file_error}')." ".realpath(__DIR__ . '/../../../config/'.$this->configPath);
     	} else {
     		if($this->configData->getString('backup_path')===null) {
-	    		$this->errors[]=$config->t('{updater:updater:updater_config_param_error}');
+	    		$this->errors[]=$this->translation->t('{updater:updater:updater_config_param_error}');
 	    	} else {
 	    		if(!file_exists($this->configData->getString('backup_path'))) {
-		    		$this->errors[]=$config->t('{updater:updater:updater_error_noexist}')." ".$this->configData->getString('backup_path');
+		    		$this->errors[]=$this->translation->t('{updater:updater:updater_error_noexist}')." ".$this->configData->getString('backup_path');
 		    	} else {
 		    		if(!is_writable($this->configData->getString('backup_path'))) {
-			    		$this->errors[]=$config->t('{updater:updater:updater_error_directory}')." ".$this->configData->getString('backup_path')." ".$config->t('{updater:updater:updater_error_access}');
+			    		$this->errors[]=$this->translation->t('{updater:updater:updater_error_directory}')." ".$this->configData->getString('backup_path')." ".$config->t('{updater:updater:updater_error_access}');
 			    	}
 		    	}
 	    	}
@@ -106,7 +106,7 @@ class BackupService
 
 		if(!mkdir($backup_path)){
 
-			$this->errors []= $config->t('{updater:updater:updater_error_params}')." ".$backup_path;
+			$this->errors []= $this->translation->t('{updater:updater:updater_error_params}')." ".$backup_path;
 
 		}else{
 
@@ -183,7 +183,7 @@ class BackupService
 				$system->rmRecursive($backup);
 
 			} else {
-				$this->errors []= $config->t('{updater:updater:updater_open_backup_error}');
+				$this->errors []= $this->translation->t('{updater:updater:updater_open_backup_error}');
 			}
 
     	//}
@@ -193,10 +193,10 @@ class BackupService
     public function deleteBackup($backupPath){
 
     	if (!file_exists($backupPath.".zip")) {
-			$this->errors []= $config->t('{updater:updater:updater_no_exist_backup}');
+			$this->errors []= $this->translation->t('{updater:updater:updater_no_exist_backup}');
 		}else{
 			if(!is_writable($backupPath.".zip")){
-				$this->errors []= $config->t('{updater:updater:updater_delete_backup_error}');
+				$this->errors []= $this->translation->t('{updater:updater:updater_delete_backup_error}');
 			}else{
 				$system = new System();
 				unlink($backupPath.".zip");

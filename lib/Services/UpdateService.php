@@ -40,9 +40,11 @@ class UpdateService
 	public $errors;
 	public $backups = array();
 	public $config;
+	public $translation;
     
     public function __construct() {
         $this->config = SimpleSAML_Configuration::getInstance();
+        $this->translation = new SimpleSAML_Locale_Translate($this->config);
     }
     
    	public function updateSSPVersion($version){
@@ -66,12 +68,12 @@ class UpdateService
 		$version = str_replace(")", "", $version);
 
 		if(!chdir('../../')){
-			$this->errors[]=$config->t('{updater:updater:updater_update_error}');
+			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}')."1";
 			return false;
 		}
 
 		if(!copy('composer.json', 'composer.back.json')){
-			$this->errors[]=$config->t('{updater:updater:updater_update_error}');
+			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}')."2";
 			return false;
 		}
 
@@ -84,7 +86,7 @@ class UpdateService
 
 		//touch('composer.json');
 		if(file_put_contents("composer.json", $composerData)===FALSE){
-			$this->errors[]=$config->t('{updater:updater:updater_update_error}');
+			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}')."3";
 			return false;
 		}
 
@@ -95,32 +97,32 @@ class UpdateService
 		$application = new Application();
 		$application->setAutoExit(false);
 		if(!$application->run($input)) {
-			$this->errors[]=$config->t('{updater:updater:updater_update_error}');
+			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}')."4";
 			return false;
 		}
 
 		$system = new System();
 		exec('\cp -r ./vendor/simplesamlphp/simplesamlphp/* ./simplesamlphp', $output, $return);
-		if (!$return) {
-		    $this->errors[]=$config->t('{updater:updater:updater_update_error}');
+		if ($return!==0) {
+		    $this->errors[]=$this->translation->t('{updater:updater:updater_update_error}')."5";
 		    return false;
 		}
 
 		if (file_exists('vendor')) {
 			$system->rmRecursive("vendor");
 		}else{
-			$this->errors[]=$config->t('{updater:updater:updater_update_error}');
+			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}')."6";
 		    return false;
 		}
 		
 		if(!chdir('simplesamlphp')){
-			$this->errors[]=$config->t('{updater:updater:updater_update_error}');
+			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}')."7";
 			return false;
 		}
 
 		$input = new ArrayInput(array('command' => 'install'));
 		if(!$application->run($input)) {
-			$this->errors[]=$config->t('{updater:updater:updater_update_error}');
+			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}')."8";
 			return false;
 		}
 		//exec('composer install', $output, $return);
@@ -130,7 +132,7 @@ class UpdateService
 
 		$input = new ArrayInput(array('command' => 'dump-autoload -a'));
 		if(!$application->run($input)) {
-			$this->errors[]=$config->t('{updater:updater:updater_update_error}');
+			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}')."9";
 			return false;
 		}
 		/*exec('composer dump-autoload -a', $output, $return);
@@ -140,12 +142,18 @@ class UpdateService
 
 		$input = new ArrayInput(array('command' => 'require composer/composer:dev-master'));
 		if(!$application->run($input)) {
-			$this->errors[]=$config->t('{updater:updater:updater_update_error}');
+			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}')."10";
+			return false;
+		}
+
+
+		if(!chdir('../')){
+			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}')."7b";
 			return false;
 		}
 
 		if(!rename('composer.back.json', 'composer.json')){
-			$this->errors[]=$config->t('{updater:updater:updater_update_error}');
+			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}')."11";
 			return false;
 		}
 		/*exec('composer require composer/composer:dev-master', $output, $return);
