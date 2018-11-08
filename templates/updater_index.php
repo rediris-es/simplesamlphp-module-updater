@@ -230,24 +230,41 @@
                 },
                 success: function(data) {
                     if(data.error==1){
+
                         for(var i=0; i<data.errors.length; i++){
+
                             $("#status-msg").append(data.errors[i]);
                             $("#status-msg").append("<br/>");
+
                         }
                        
                     }else{
-                        $("#status-msg").text("<?php echo $this->t('{updater:updater:updater_simplesamlphp_updated}'); ?>");
-                        document.getElementById("currentVersion").val = data.data.currentVersion;
+
+                        $("#status-msg").text("<?php echo $this->t('{updater:updater:update_process_ok}'); ?>");
+                        document.getElementById("currentVersion").value = data.data.currentVersion;
+                        
+                        var versions = [];
+
                         if(data.data.recentVersions.length>0){
-                            reloadListById('simplesamlphp_version', data.data.recentVersions);
+
+
+                            for(var i=0;i<data.data.recentVersions.length; i++){
+                                versions.push(data.data.recentVersions[i].title);
+                            }
+
                         }else{
+
                             versionElement.style.display = "none";
-                            versionElement.after("<label><?php echo $this->t('{updater:updater:updater_simplesamlphp_updated}'); ?></label>");
+                            $("#simplesamlphp_version").after("<div><label><?php echo $this->t('{updater:updater:updater_simplesamlphp_updated}'); ?></label></div>");
+                        
                         }
+
+                        reloadListById('simplesamlphp_version', versions);
                     }
                 },
                 error: function() {
-                    console.log("<?php echo $this->t('{updater:updater:updater_update_error}'); ?>");
+                    $("#status-msg").append("<?php echo $this->t('{updater:updater:updater_update_error}'); ?>");
+                    $("#status-msg").append("<br/>");
                 }
             });
         }else{
@@ -289,7 +306,8 @@
 
             },
             error: function() {
-                console.log("<?php echo $this->t('{updater:updater:updater_update_error}'); ?>");
+                $("#status-msg").append("<?php echo $this->t('{updater:updater:updater_update_error}'); ?>");
+                $("#status-msg").append("<br/>");
             }
         });
     }
@@ -332,7 +350,8 @@
                     
                 },
                 error: function() {
-                    console.log("<?php echo $this->t('{updater:updater:updater_update_error}'); ?>");
+                    $("#status-msg").append("<?php echo $this->t('{updater:updater:updater_update_error}'); ?>");
+                    $("#status-msg").append("<br/>");
                 }
             });
 
@@ -379,6 +398,10 @@
                 }
                 
             },
+            error: function() {
+                $("#status-msg").append("<?php echo $this->t('{updater:updater:updater_update_error}'); ?>");
+                $("#status-msg").append("<br/>");
+            }
         });
 
     }

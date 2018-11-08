@@ -62,11 +62,6 @@ class UpdateService
 		// change out of the webroot so that the vendors file is not created in
 		// a place that will be visible to the intahwebz
 
-		preg_match('!\(([^\)]+)\)!', $version, $match);
-		$version = $match[0];
-		$version = str_replace("(", "", $version);
-		$version = str_replace(")", "", $version);
-
 		if(!chdir('../../')){
 			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}')."1";
 			return false;
@@ -161,7 +156,7 @@ class UpdateService
 		    $this->errros[]="No se ha podido actualizar correctamente.";
 		}*/
 		//shell_exec('composer update');
-		//$system->rmRecursive("./vendor");
+		$system->rmRecursive("./vendor");
 	}
 
 }

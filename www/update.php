@@ -21,11 +21,19 @@ if ($_POST['hook']=="update"
 	if($BackupService->check5minBackup()===true){
 		$UpdateService = new UpdateService();
 	
-		$UpdateService->updateSSPVersion($_POST['simplesamlphp_version']);
+		preg_match('!\(([^\)]+)\)!', $_POST['simplesamlphp_version'], $match);
+		$version = $match[0];
+		$version = str_replace("(", "", $version);
+		$version = str_replace(")", "", $version);
+
+		$UpdateService->updateSSPVersion($version);
 		$errors = $UpdateService->errors;
 		$error = (count($errors)>0 ? 1 : 0 );
 
 		$SSPVersionsService = new SSPVersionsService();
+
+		if($error==0) $SSPVersionsService->currentVersion = $version;
+
 		$data['currentVersion'] = $SSPVersionsService->currentVersion;
 		$data['recentVersions'] = $SSPVersionsService->getRecentVersions();
 	}else{
