@@ -1,15 +1,5 @@
 <?php
-/*
- * This file is part of the simplesamlphp-module-oidc.
- *
- * Copyright (C) 2018 by the Spanish Research and Academic Network.
- *
- * This code was developed by Universidad de Córdoba (UCO https://www.uco.es)
- * for the RedIRIS SIR service (SIR: http://www.rediris.es/sir)
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
+
 /*namespace SimpleSAML\Modules\Updater\Services;
 
 use SimpleSAML\Modules\Updater\Utils\System;
@@ -63,12 +53,12 @@ class UpdateService
 		// a place that will be visible to the intahwebz
 
 		if(!chdir('../../')){
-			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}')."1";
+			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}');
 			return false;
 		}
 
 		if(!copy('composer.json', 'composer.back.json')){
-			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}')."2";
+			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}');
 			return false;
 		}
 
@@ -81,7 +71,7 @@ class UpdateService
 
 		//touch('composer.json');
 		if(file_put_contents("composer.json", $composerData)===FALSE){
-			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}')."3";
+			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}');
 			return false;
 		}
 
@@ -92,32 +82,32 @@ class UpdateService
 		$application = new Application();
 		$application->setAutoExit(false);
 		if(!$application->run($input)) {
-			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}')."4";
+			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}');
 			return false;
 		}
 
 		$system = new System();
 		exec('\cp -r ./vendor/simplesamlphp/simplesamlphp/* ./simplesamlphp', $output, $return);
 		if ($return!==0) {
-		    $this->errors[]=$this->translation->t('{updater:updater:updater_update_error}')."5";
+		    $this->errors[]=$this->translation->t('{updater:updater:updater_update_error}');
 		    return false;
 		}
 
 		if (file_exists('vendor')) {
 			$system->rmRecursive("vendor");
 		}else{
-			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}')."6";
+			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}');
 		    return false;
 		}
 		
 		if(!chdir('simplesamlphp')){
-			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}')."7";
+			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}');
 			return false;
 		}
 
 		$input = new ArrayInput(array('command' => 'install'));
 		if(!$application->run($input)) {
-			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}')."8";
+			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}');
 			return false;
 		}
 		//exec('composer install', $output, $return);
@@ -127,7 +117,7 @@ class UpdateService
 
 		$input = new ArrayInput(array('command' => 'dump-autoload -a'));
 		if(!$application->run($input)) {
-			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}')."9";
+			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}');
 			return false;
 		}
 		/*exec('composer dump-autoload -a', $output, $return);
@@ -137,18 +127,18 @@ class UpdateService
 
 		$input = new ArrayInput(array('command' => 'require composer/composer:dev-master'));
 		if(!$application->run($input)) {
-			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}')."10";
+			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}');
 			return false;
 		}
 
 
 		if(!chdir('../')){
-			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}')."7b";
+			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}');
 			return false;
 		}
 
 		if(!rename('composer.back.json', 'composer.json')){
-			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}')."11";
+			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}');
 			return false;
 		}
 		/*exec('composer require composer/composer:dev-master', $output, $return);
