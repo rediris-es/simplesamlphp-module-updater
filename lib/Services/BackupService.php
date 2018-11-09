@@ -73,13 +73,8 @@ class BackupService
     		
     		$backup = $this->backups[$i];
 
-    		$backupParts = explode(" - ", $backup);
-
-    		$fechaBackup = $backupParts[count($backupParts)-2];
-    		$horaBackup = $backupParts[count($backupParts)-1];
-
     		$currentDate = new DateTime($datetime);
-    		$backupDate = new DateTime($fechaBackup." ".$horaBackup);
+    		$backupDate = $this->getDateFromBackup($backup);
 
     		$diff = $currentDate->diff($backupDate);
 
@@ -214,8 +209,41 @@ class BackupService
 
         }
 
-        $this->lastBackup = (count($this->backups)>0 ? $this->backups[count($this->backups)-1] : null);
+        $this->lastBackup = $this->getLastBackup();
 
+    }
+
+    private function getLastBackup(){
+
+    	$lastBackupTemp = null;
+    	$lastBackupDateTemp = null;
+
+    	foreach ($this->backups as $key => $back) {
+    		
+
+    		if($lastBackupTemp==null){
+    			$lastBackupTemp = $back;	
+    			$lastBackupDateTemp = $this->getDateFromBackup($back);
+    		} else{
+    			if($this->getDateFromBackup($back)>$lastBackupDateTemp){
+
+    				$lastBackupDateTemp = $this->getDateFromBackup($back);
+    				$lastBackupTemp = $back;
+    			}
+    		}
+
+    	}
+
+    	return $lastBackupTemp;
+
+    }
+
+    private function getDateFromBackup($backup){
+    	$backupParts = explode(" - ", $backup);
+		$fechaBackup = $backupParts[count($backupParts)-2];
+		$horaBackup = $backupParts[count($backupParts)-1];
+		$backupDate = new DateTime($fechaBackup." ".$horaBackup);
+		return $backupDate;
     }
 
 }
