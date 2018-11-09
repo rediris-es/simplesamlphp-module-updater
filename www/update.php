@@ -7,6 +7,16 @@ include (__DIR__. "/../lib/Services/UpdateService.php");
 include (__DIR__. "/../lib/Services/SSPVersionsService.php");
 include (__DIR__. "/../lib/Services/BackupService.php");
 
+$config = SimpleSAML_Configuration::getInstance();
+$session = SimpleSAML_Session::getSessionFromRequest();
+
+// Check if valid local session exists
+if ($config->getBoolean('admin.protectindexpage', false)) {
+    SimpleSAML\Utils\Auth::requireAdmin();
+}
+$loginurl = SimpleSAML\Utils\Auth::getAdminLoginURL();
+$isadmin = SimpleSAML\Utils\Auth::isAdmin();
+
 /*
 include (__DIR__. "/../lib/Utils/System.php");
 */
