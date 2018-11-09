@@ -29,6 +29,9 @@ if ($_POST['hook']=="update"
 	$BackupService = new BackupService();
 
 	if($BackupService->check5minBackup()===true){
+
+		$securityBackupPath = $BackupService->createSecurityBackup();
+
 		$UpdateService = new UpdateService();
 	
 		preg_match('!\(([^\)]+)\)!', $_POST['simplesamlphp_version'], $match);
@@ -42,7 +45,10 @@ if ($_POST['hook']=="update"
 
 		$SSPVersionsService = new SSPVersionsService();
 
-		if($error==0) $SSPVersionsService->currentVersion = $version;
+		if($error==0){
+			$SSPVersionsService->currentVersion = $version;
+			$BackupService->deleteSecurityBackup($securityBackupPath);
+		}
 
 		$data['currentVersion'] = $SSPVersionsService->currentVersion;
 		$data['recentVersions'] = $SSPVersionsService->getRecentVersions();

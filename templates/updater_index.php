@@ -299,7 +299,7 @@
                         $("#status-msg").append("<br/>");
                     }
                 }else{
-                    $("#status-msg").text("<?php echo $this->t('{updater:updater:updater_success_backup}').$this->t('{updater:updater:updater_success_make}'); ?>");
+                    $("#status-msg").text("<?php echo $this->t('{updater:updater:updater_success_backup}')." ".$this->t('{updater:updater:updater_success_make}'); ?>");
                     reloadLastBackup(data.lastBackup);
                     reloadListById('backups', data.backups);
                 }

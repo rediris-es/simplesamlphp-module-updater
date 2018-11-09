@@ -21,10 +21,12 @@ class BackupService
 	public $errors;
 	public $backups = array();
 	public $config;
+	public $translation;
     
     public function __construct() {
         $this->checkRequeriments();
         $this->config = SimpleSAML_Configuration::getInstance();
+        $this->translation = new SimpleSAML_Locale_Translate($this->config);
     }
     
     private function checkConfigFile() {
@@ -118,6 +120,38 @@ class BackupService
 		    $system->rmRecursive($backup_path);
 		}
 
+    }
+
+    public function createSecurityBackup(){
+
+		$system = new System();
+
+		$securityBackupPath =  __DIR__ ."/../../../../../simplesamlphp_backup_".date("YmdHis");
+
+		if(!mkdir($securityBackupPath)){
+			$this->errors []= $this->translation->t('{updater:updater:updater_error_params}')." ".$securityBackupPath;
+		}else{
+			$system->cpRecursive(__DIR__ ."/../../../../../simplesamlphp/", $securityBackupPath);
+		}
+		
+		$pathInfo = pathInfo($securityBackupPath);
+	    $parentPath = $pathInfo['dirname'];
+	    $dirName = $pathInfo['basename']; 
+
+		$zip = new ZipArchive();
+	    $zip->open($securityBackupPath.".zip", ZIPARCHIVE::CREATE);
+	    $zip->addEmptyDir($dirName); 
+	    $system->zipRecursive($securityBackupPath, $zip, strlen("$parentPath/"));
+	    $zip->close(); 
+
+	    $system->rmRecursive($securityBackupPath);
+
+	    return $securityBackupPath;
+
+    }
+
+    public function deleteSecurityBackup($securityBackupPath){
+    	unlink($securityBackupPath.".zip");
     }
 
     private function backupIsValid($backup){
