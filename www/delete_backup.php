@@ -11,7 +11,7 @@ $SSPVersionsService = new SSPVersionsService();
 $BackupService = new BackupService();
 
 if ($_POST['hook']=="delete" 
-	&& isset($$_POST['selected_backup_delete']) 
+	&& isset($_POST['selected_backup_delete']) 
 	&& $_POST['selected_backup_delete']!="") {
 
 	$currentPath = $BackupService->configData->getString("backup_path");
