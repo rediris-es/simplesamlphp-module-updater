@@ -6,7 +6,7 @@ A SimpleSAMLphp module adding support for backing up and updating SimpleSAMLphp
 
 Installation can be as easy as executing:
 
-    composer require rediris-es/simplesamlphp-module-updater
+   composer require rediris-es/simplesamlphp-module-updater
     
 ## Configuration
 
