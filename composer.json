@@ -14,8 +14,7 @@
 		"email": "jmanuel.macias@rediris.es"
 	}	
 	],
-    	"require": {
-        	"simplesamlphp/composer-module-installer": "~1.0",
-        	"rediris-es/idpref-installer-updater": "*"
-    	}
+	"require": {
+    	"simplesamlphp/composer-module-installer": "~1.0"
+    }
 }
