@@ -191,6 +191,20 @@ class BackupService
 
 			if ($zip->open($backup.".zip") === TRUE) {
 
+				$conf_path = realpath(__DIR__ . '/../../../../config/config.php');
+			    $idph_path = realpath(__DIR__ . '/../../../../metadata/saml20-idp-hosted.php');
+			    $spr_path  = realpath(__DIR__ . '/../../../../metadata/saml20-sp-remote.php');
+			    $idpr_path = realpath(__DIR__ . '/../../../../metadata/saml20-idp-remote.php');
+			    $mods_path = realpath(__DIR__ . '/../../../../modules'); 
+			    $cert_path = realpath(__DIR__ . '/../../../../cert');
+
+			    chmod($conf_path, 0664);
+		        chmod($idph_path, 0664);
+		        chmod($spr_path, 0664);
+		        chmod($idpr_path, 0664)
+		        chmod($mods_path, 0775);
+		        chmod($cert_path, 0775);
+
 			    $zip->extractTo($this->configData->getString("backup_path"));
 			    $zip->close();
 			    $system->cpRecursive($backup."/config/", __DIR__ ."/../../../../config");

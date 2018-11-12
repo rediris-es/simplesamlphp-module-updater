@@ -6,7 +6,7 @@ use SimpleSAML\Modules\Updater\Utils\System;
 use SimpleSAML\Modules\Updater\Services\SSPVersionsService;*/
 
 ini_set('memory_limit','-1'); 
-
+ini_set('max_execution_time', 0);
 define('EXTRACT_DIRECTORY', "../");
 
 use SimpleSAML\Module;
