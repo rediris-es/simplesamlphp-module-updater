@@ -201,7 +201,7 @@ class BackupService
 			    chmod($conf_path, 0664);
 		        chmod($idph_path, 0664);
 		        chmod($spr_path, 0664);
-		        chmod($idpr_path, 0664)
+		        chmod($idpr_path, 0664);
 		        chmod($mods_path, 0775);
 		        chmod($cert_path, 0775);
 
