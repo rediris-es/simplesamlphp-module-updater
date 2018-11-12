@@ -245,10 +245,10 @@ class BackupService
     	foreach ($this->backups as $key => $back) {
     		
 
-    		if($lastBackupTemp==null){
+    		if($lastBackupTemp==null) {
     			$lastBackupTemp = $back;	
     			$lastBackupDateTemp = $this->getDateFromBackup($back);
-    		} else{
+    		} else {
     			if($this->getDateFromBackup($back)>$lastBackupDateTemp){
 
     				$lastBackupDateTemp = $this->getDateFromBackup($back);
