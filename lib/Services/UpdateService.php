@@ -25,12 +25,12 @@ use Symfony\Component\Console\Input\ArrayInput;
 class UpdateService
 {
 
-	public $configPath = "updater_config.php";
-	public $configData;
-	public $errors;
-	public $backups = array();
-	public $config;
-	public $translation;
+	private $configPath = "updater_config.php";
+	private $configData;
+	private $errors;
+	private $backups = array();
+	private $config;
+	private $translation;
     
     public function __construct() {
         $this->config = SimpleSAML_Configuration::getInstance();
@@ -86,7 +86,7 @@ class UpdateService
 			return false;
 		}
 
-		$system = new System();
+		/*$system = new System();
 		exec('\cp -r ./vendor/simplesamlphp/simplesamlphp/* ./simplesamlphp', $output, $return);
 		if ($return!==0) {
 		    $this->errors[]=$this->translation->t('{updater:updater:updater_update_error}');
@@ -111,19 +111,19 @@ class UpdateService
 			return false;
 		}
 		//exec('composer install', $output, $return);
-		/*if (!$return) {
-		    $this->errros[]="No se ha podido actualizar correctamente.";
-		}*/
+		//if (!$return) {
+		    //$this->errros[]="No se ha podido actualizar correctamente.";
+		//}
 
 		$input = new ArrayInput(array('command' => 'dump-autoload -a'));
 		if(!$application->run($input)) {
 			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}');
 			return false;
 		}
-		/*exec('composer dump-autoload -a', $output, $return);
-		if (!$return) {
-		    $this->errros[]="No se ha podido actualizar correctamente.";
-		}*/
+		//exec('composer dump-autoload -a', $output, $return);
+		//if (!$return) {
+		    //$this->errros[]="No se ha podido actualizar correctamente.";
+		//}
 
 		$input = new ArrayInput(array('command' => 'require composer/composer:dev-master'));
 		if(!$application->run($input)) {
@@ -141,12 +141,12 @@ class UpdateService
 			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}');
 			return false;
 		}
-		/*exec('composer require composer/composer:dev-master', $output, $return);
-		if (!$return) {
-		    $this->errros[]="No se ha podido actualizar correctamente.";
-		}*/
+		//exec('composer require composer/composer:dev-master', $output, $return);
+		//if (!$return) {
+		    //$this->errros[]="No se ha podido actualizar correctamente.";
+		//}
 		//shell_exec('composer update');
-		$system->rmRecursive("./vendor");
+		$system->rmRecursive("./vendor");*/
 	}
 
 }
