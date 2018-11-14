@@ -81,7 +81,7 @@ class UpdateService
 		//Create the application and run it with the commands
 		$application = new Application();
 		$application->setAutoExit(false);
-		if(!$application->run($input)) {
+		if(!$application->doRun($input)) {
 			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}');
 			return false;
 		}
