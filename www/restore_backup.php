@@ -17,20 +17,19 @@ if ($_POST['hook']=="restore"
 	$SSPVersionsService = new SSPVersionsService();
 	$BackupService = new BackupService();
 
-	$currentPath = $BackupService->configData->getString("backup_path");
+	$currentPath = $BackupService->getConfigData()->getString("backup_path");
 	$backupPath = $currentPath.urldecode($_POST['selected_backup_restore']);
 
 	$BackupService->restoreBackup($backupPath);
 
-	$BackupService->getBackups();
-	$backups = $BackupService->backups;
-	$lastBackup = $BackupService->lastBackup;
-	$errors = $BackupService->errors;
+	$backups = $BackupService->getBackups();
+	$lastBackup = $BackupService->getLastBackup();
+	$errors = $BackupService->getErrors();
 	$error = (count($errors)>0 ? 1 : 0 );
 
 }else{
-	$backups = $BackupService->backups;
-	$lastBackup = $BackupService->lastBackup;
+	$backups = $BackupService->getBackups();
+	$lastBackup = $BackupService->getLastBackup();
 	$errors = array("Los parametros no son validos, recuerde que debe seleccionar una copia de seguridad.");
 	$error = 1;
 }

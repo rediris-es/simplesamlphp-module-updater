@@ -16,12 +16,12 @@ use SimpleSAML\Configuration;
 class BackupService
 {
 
-	public $configPath = "updater_config.php";
-	public $configData;
-	public $errors;
-	public $backups = array();
-	public $config;
-	public $translation;
+	private $configPath = "updater_config.php";
+	private $configData;
+	private $errors;
+	private $backups = array();
+	private $config;
+	private $translation;
     
     public function __construct() {
         $this->checkRequeriments();
@@ -247,11 +247,11 @@ class BackupService
 
         }
 
-        $this->lastBackup = $this->getLastBackup();
+        return $this->backups;
 
     }
 
-    private function getLastBackup(){
+    public function getLastBackup(){
 
     	$lastBackupTemp = null;
     	$lastBackupDateTemp = null;
@@ -276,6 +276,14 @@ class BackupService
 
     }
 
+    public function getConfigData(){
+    	return $this->configData;
+    }
+
+    public function getErrors(){
+    	return $this->errors;
+    }
+
     private function getDateFromBackup($backup){
     	$backupParts = explode(" - ", $backup);
 		$fechaBackup = $backupParts[count($backupParts)-2];
@@ -283,6 +291,8 @@ class BackupService
 		$backupDate = new DateTime($fechaBackup." ".$horaBackup);
 		return $backupDate;
     }
+
+
 
 }
 

@@ -12,10 +12,10 @@ $BackupService = new BackupService();
 
 $BackupService->createBackup();
 
-$BackupService->getBackups();
-$backups = $BackupService->backups;
-$lastBackup = $BackupService->lastBackup;
-$errors = $BackupService->errors;
+$backups = $BackupService->getBackups();
+$lastBackup = $BackupService->getLastBackup();
+$errors = $BackupService->getErrors();
+
 $error = (count($errors)>0 ? 1 : 0 );
 $response = array(
 				"backups" => $backups,

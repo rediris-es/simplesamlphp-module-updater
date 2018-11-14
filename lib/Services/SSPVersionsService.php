@@ -12,6 +12,7 @@ class SSPVersionsService
 		$this->currentVersion = $cfg->getVersion();
     }
 
+
     public function getRecentVersions(){
     	
     	$contentFeed = file_get_contents("https://packagist.org/feeds/package.simplesamlphp/simplesamlphp.rss");
@@ -38,7 +39,14 @@ class SSPVersionsService
 	    return $itemsFeed;
 
     }
+
+    public function setCurrentVersion($version){
+    	$this->currentVersion = $version;
+    }
     
+    public function getCurrentVersion(){
+    	return $this->currentVersion();
+    }
     
 }
 

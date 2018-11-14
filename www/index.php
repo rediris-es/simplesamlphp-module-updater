@@ -40,12 +40,12 @@ $sirinfo = array(
         'ssphpobj' => $t
 );
 
-$sirinfo['currentVersion'] = $SSPVersionsService->currentVersion;
-$sirinfo['backups'] = $BackupService->backups;
-$sirinfo['latestBackup'] = $BackupService->lastBackup;
-$sirinfo['backupPath'] = $BackupService->configData->getString('backup_path');
+$sirinfo['currentVersion'] = $SSPVersionsService->getCurrentVersion();
+$sirinfo['backups'] = $BackupService->getBackups();
+$sirinfo['latestBackup'] = $BackupService->getLastBackup();
+$sirinfo['backupPath'] = $BackupService->getConfigData()->getString('backup_path');
 $sirinfo['versions'] = $SSPVersionsService->getRecentVersions();
-$sirinfo['errors'] = $BackupService->errors;
+$sirinfo['errors'] = $BackupService->getErrors();
 //$hook = (isset($_POST['hook']) ? $_POST['hook'] : "index");
 
 

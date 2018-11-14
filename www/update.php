@@ -40,17 +40,17 @@ if ($_POST['hook']=="update"
 		$version = str_replace(")", "", $version);
 
 		$UpdateService->updateSSPVersion($version);
-		$errors = $UpdateService->errors;
+		$errors = $UpdateService->getErrors();
 		$error = (count($errors)>0 ? 1 : 0 );
 
 		$SSPVersionsService = new SSPVersionsService();
 
 		if($error==0){
-			$SSPVersionsService->currentVersion = $version;
+			$SSPVersionsService->setCurrentVersion($version);
 			$BackupService->deleteSecurityBackup($securityBackupPath);
 		}
 
-		$data['currentVersion'] = $SSPVersionsService->currentVersion;
+		$data['currentVersion'] = $SSPVersionsService->getCurrentVersion();
 		$data['recentVersions'] = $SSPVersionsService->getRecentVersions();
 	}else{
 		$errors = array("Es obligatorio hacer una copia de seguridad antes de actualizar.");
