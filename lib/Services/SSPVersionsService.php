@@ -45,7 +45,7 @@ class SSPVersionsService
     }
     
     public function getCurrentVersion(){
-    	return $this->currentVersion();
+    	return $this->currentVersion;
     }
     
 }
