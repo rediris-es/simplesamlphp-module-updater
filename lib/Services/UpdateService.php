@@ -149,6 +149,10 @@ class UpdateService
 		$system->rmRecursive("./vendor");*/
 	}
 
+	public function getErrors(){
+		return $this->errors;
+	}
+
 }
 
 
