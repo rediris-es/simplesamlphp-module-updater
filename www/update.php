@@ -28,34 +28,30 @@ if ($_POST['hook']=="update"
 
 	$BackupService = new BackupService();
 
-	if($BackupService->check5minBackup()===true){
 
-		$securityBackupPath = $BackupService->createSecurityBackup();
+	//$securityBackupPath = $BackupService->createSecurityBackup();
 
-		$UpdateService = new UpdateService();
-	
-		preg_match('!\(([^\)]+)\)!', $_POST['simplesamlphp_version'], $match);
-		$version = $match[0];
-		$version = str_replace("(", "", $version);
-		$version = str_replace(")", "", $version);
+	$UpdateService = new UpdateService();
 
-		$UpdateService->updateSSPVersion($version);
-		$errors = $UpdateService->getErrors();
-		$error = (count($errors)>0 ? 1 : 0 );
+	preg_match('!\(([^\)]+)\)!', $_POST['simplesamlphp_version'], $match);
+	$version = $match[0];
+	$version = str_replace("(", "", $version);
+	$version = str_replace(")", "", $version);
 
-		$SSPVersionsService = new SSPVersionsService();
+	$UpdateService->updateSSPVersion($version);
+	$errors = $UpdateService->getErrors();
+	$error = (count($errors)>0 ? 1 : 0 );
 
-		if($error==0){
-			$SSPVersionsService->setCurrentVersion($version);
-			$BackupService->deleteSecurityBackup($securityBackupPath);
-		}
+	$SSPVersionsService = new SSPVersionsService();
 
-		$data['currentVersion'] = $SSPVersionsService->getCurrentVersion();
-		$data['recentVersions'] = $SSPVersionsService->getRecentVersions();
-	}else{
-		$errors = array("Es obligatorio hacer una copia de seguridad antes de actualizar.");
-		$error = 1;
+	if($error==0){
+		$SSPVersionsService->setCurrentVersion($version);
+		//$BackupService->deleteSecurityBackup($securityBackupPath);
 	}
+
+	$data['currentVersion'] = $SSPVersionsService->getCurrentVersion();
+	$data['recentVersions'] = $SSPVersionsService->getRecentVersions();
+	
 
 } else {
 	$errors = array("Los parametros no son validos, recuerde que debe seleccionar una versión de SimpleSAMLphp");
