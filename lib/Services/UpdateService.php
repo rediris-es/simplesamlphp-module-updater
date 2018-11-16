@@ -6,7 +6,7 @@ use SimpleSAML\Modules\Updater\Utils\System;
 use SimpleSAML\Modules\Updater\Services\SSPVersionsService;*/
 
 ini_set('memory_limit','-1'); 
-ini_set('max_execution_time', 0);
+ini_set('max_execution_time', '-1');
 define('EXTRACT_DIRECTORY', "../");
 
 use SimpleSAML\Module;
@@ -128,16 +128,37 @@ class UpdateService
 		$filePermissions = octdec("0664");
 		$folderPermissions = octdec("0775");
 
-		copy($sspDir."/metadata-templates/saml20-idp-hosted.php", $configDir."/metadata/saml20-idp-hosted.php");
-		copy($sspDir."/metadata-templates/saml20-idp-remote.php", $configDir."/metadata/saml20-idp-remote.php");
-		copy($sspDir."/metadata-templates/saml20-sp-remote.php", $configDir."/metadata/saml20-sp-remote.php");
-		copy($sspDir."/metadata-templates/saml20-idp-hosted.php", $configDir."/metadata/saml20-idp-hosted.php");
-		copy($sspDir."/metadata-templates/saml20-idp-remote.php", $configDir."/metadata/saml20-idp-remote.php");
-		copy($sspDir."/config-templates/acl.php", $configDir."/config/acl.php");
-		copy($sspDir."/config-templates/authmemcookie.php", $configDir."/config/authmemcookie.php");
-		copy($sspDir."/config-templates/authsources.php", $configDir."/config/authsources.php");
-		copy($sspDir."/config-templates/config.php", $configDir."/config/config.php");
-		copy($sspDir."/modules/updater/config_template/updater_config.php", $configDir."/config/updater_config.php");
+		if (!file_exists($configDir.'/metadata/saml20-idp-hosted.php')) {
+			copy($sspDir."/metadata-templates/saml20-idp-hosted.php", $configDir."/metadata/saml20-idp-hosted.php");
+		}
+
+		if (!file_exists($configDir.'/metadata/saml20-idp-remote.php')) {
+			copy($sspDir."/metadata-templates/saml20-idp-remote.php", $configDir."/metadata/saml20-idp-remote.php");
+		}
+
+		if (!file_exists($configDir.'/metadata/saml20-sp-remote.php')) {
+			copy($sspDir."/metadata-templates/saml20-sp-remote.php", $configDir."/metadata/saml20-sp-remote.php");
+		}
+
+		if (!file_exists($configDir.'/config/acl.php')) {
+			copy($sspDir."/config-templates/acl.php", $configDir."/config/acl.php");
+		}
+
+		if (!file_exists($configDir.'/config/authmemcookie.php')) {
+			copy($sspDir."/config-templates/authmemcookie.php", $configDir."/config/authmemcookie.php");
+		}
+
+		if (!file_exists($configDir.'/config/authsources.php')) {
+			copy($sspDir."/config-templates/authsources.php", $configDir."/config/authsources.php");
+		}
+
+		if (!file_exists($configDir.'/config/config.php')) {
+			copy($sspDir."/config-templates/config.php", $configDir."/config/config.php");
+		}
+
+		if (!file_exists($configDir.'/config/updater_config.php')) {
+			copy($sspDir."/modules/updater/config_template/updater_config.php", $configDir."/config/updater_config.php");
+		}
 
 		if (file_exists($sspDir.'/metadata')) {
 			$system->rmRecursive($sspDir.'/metadata');
