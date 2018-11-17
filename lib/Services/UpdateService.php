@@ -242,7 +242,10 @@ class UpdateService
 		}
 
 		$input = new ArrayInput(array('command' => 'install'));
-		if(!$application->run($input)) {
+		//Create the application and run it with the commands
+		$application2 = new Application();
+		$application2->setAutoExit(false);
+		if(!$application2->run($input)) {
 			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error_6}');
 			return false;
 		}
@@ -267,7 +270,9 @@ class UpdateService
 		}*/
 
 		$input = new ArrayInput(array('command' => 'require composer/composer:dev-master'));
-		if(!$application->run($input)) {
+		$application3 = new Application();
+		$application3->setAutoExit(false);
+		if(!$application3->run($input)) {
 			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error_8}');
 			\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_error_8}'));
 			return false;
