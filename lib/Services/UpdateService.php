@@ -241,16 +241,13 @@ class UpdateService
 			return false;
 		}
 
-		$input = new ArrayInput(array('command' => 'install'));
-		//Create the application and run it with the commands
-		$application2 = new Application();
-		$application2->setAutoExit(false);
-		if(!$application2->run($input)) {
+		/*$input = new ArrayInput(array('command' => 'install'));
+		if(!$application->run($input)) {
 			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error_6}');
 			return false;
-		}
-		/*exec('composer install', $output, $return);
-		if (!$return) {
+		}*/
+		exec('composer install', $output, $return);
+		/*if (!$return) {
 			$this->errros[]=$this->translation->t('{updater:updater:updater_update_error_6}');
 			\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_error_6}'));
 			return false;
@@ -269,17 +266,15 @@ class UpdateService
 			return false;
 		}*/
 
-		$input = new ArrayInput(array('command' => 'require composer/composer:dev-master'));
-		$application3 = new Application();
-		$application3->setAutoExit(false);
-		if(!$application3->run($input)) {
+		/*$input = new ArrayInput(array('command' => 'require composer/composer:dev-master'));
+		if(!$application->run($input)) {
 			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error_8}');
 			\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_error_8}'));
 			return false;
-		}
+		}*/
 
-		/*exec('composer require composer/composer:dev-master', $output, $return);
-		if (!$return) {
+		exec('composer require composer/composer:dev-master', $output, $return);
+		/*if (!$return) {
 			$this->errros[]=$this->translation->t('{updater:updater:updater_update_error_8}');
 			\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_error_8}'));
 			return false;
