@@ -195,6 +195,47 @@
         "es": "No se ha podido actualizar correctamente.",
         "en": "Can not update correctly."
     },
+    "updater_update_error_1": {
+        "es": "Error al posicionarnos en el directorio padre de la aplicación.",
+        "en": "Can not update correctly."
+    },
+    "updater_update_error_2": {
+        "es": "Error en la creación de la copia de seguridad del fichero composer.json.",
+        "en": "Can not update correctly."
+    },
+    "updater_update_error_3": {
+        "es": "Error en la generación del nuevo fichero composer.json con la versión seleccionada.",
+        "en": "Can not update correctly."
+    },
+    "updater_update_error_4": {
+        "es": "Ha ocurrido un error en la ejecución del composer update.",
+        "en": "Can not update correctly."
+    },
+    "updater_update_error_5": {
+        "es": "Error al cambiar el directorio de trabajo para la restructuración de dependencias tras la actualización.",
+        "en": "Can not update correctly."
+    },
+    "updater_update_error_6": {
+        "es": "Error en la ejecución del composer install.",
+        "en": "Can not update correctly."
+    },
+    "updater_update_error_7": {
+        "es": "Error en la ejecución del composer dump-autoload.",
+        "en": "Can not update correctly."
+    },
+    "updater_update_error_8": {
+        "es": "Error en la ejecución del composer require composer/composer:dev-master.",
+        "en": "Can not update correctly."
+    },
+    "updater_update_error_9": {
+        "es": "Error al cambiar el directorio de trabajo para restaurar el composer.json a la versión inicial.",
+        "en": "Can not update correctly."
+    },
+    "updater_update_error_10": {
+        "es": "Error en la restauración del composer.json a la versión inicial.",
+        "en": "Can not update correctly."
+    },
+
     "updater_link": {
         "es": "Actualización de SimpleSAMLphp",
         "en": "SimpleSAMLphp update"
