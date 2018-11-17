@@ -104,15 +104,6 @@
                </div>
                <div style="clear: both;"></div>
            </div>
-           <div class="input-container">
-               <div class="float-l">
-                   <label><?php echo $this->t('{updater:updater:updater_latestbackup}'); ?>:</label>
-               </div>
-               <div class="float-r">
-                   <input id="lastBackup" readonly="readonly" style="width:300px; text-align: right;" value="<?php echo ($this->data['sir']['latestBackup']==null ? $this->t('{updater:updater:updater_no_backups}') : $this->data['sir']['latestBackup']); ?>">
-               </div>
-               <div style="clear: both;"></div>
-           </div>
        </div>
     </fieldset>
 
@@ -147,45 +138,6 @@
            </div>
         </div>
      </fieldset>
-
-     <fieldset class="fancyfieldset">
-       <legend><?php echo $this->t('{updater:updater:updater_title_backups}')?></legend> 
-       <div style="margin: 1em 2em;">
-           <div class="input-container">
-               <div class="float-l">
-                   <label><?php echo $this->t("{updater:updater:updater_list_backups}"); ?>:</label>
-               </div>
-               <div class="float-l">
-                    <select id="backups">
-                        <?php foreach ($this->data['sir']['backups'] as $key => $value) { ?>
-                            <option value="<?php echo $value; ?>"><?php echo $value; ?></option>
-                        <?php } ?>
-                    </select>
-               </div>
-               <div style="clear: both;"></div>
-           </div>
-           <div>
-                <form id="form-backup" name="form-backup" method="POST">
-                    <input type="hidden" value="backup" name="hook"/>
-                    <input type="button" onclick="create_backup();" name="send_form" value="<?php echo $this->t('{updater:updater:updater_btn_backup}'); ?>"/>
-                </form>
-           </div>
-           <div>
-                <form id="form-restore" name="form-restore" method="POST">
-                    <input type="hidden" value="restore" name="hook"/>
-                    <input type="hidden" value="" name="selected_backup_restore" id="selected_backup_restore"/>
-                    <input type="button" onclick="restore_backup();" name="send_form" value="<?php echo $this->t('{updater:updater:updater_btn_restore}'); ?>"/>
-                </form>
-           </div>
-           <div>
-                <form id="form-delete" name="form-delete" method="POST">
-                    <input type="hidden" value="delete" name="hook"/>
-                    <input type="hidden" value="" name="selected_backup_delete" id="selected_backup_delete"/>
-                    <input type="button" onclick="delete_backup();" name="send_form" value="<?php echo $this->t('{updater:updater:updater_btn_delete}'); ?>"/>
-                </form>
-           </div>
-        </div>
-    </fieldset>
         
 </div>
 
@@ -274,137 +226,6 @@
 
     }
 
-    function create_backup(){
-
-
-        $("#status-msg").html("");
-        $("#loader-msg").html("<?php echo $this->t('{updater:updater:updater_process_create_backup}'); ?>, <?php echo $this->t('{updater:updater:updater_process_wait_seconds}'); ?>...");
-
-        $.ajax({
-            type: "POST",
-            url: "create_backup.php",
-            data: $('#form-backup').serialize(),
-            dataType: "json",
-            beforeSend: function() {
-                toggleModal();
-                $('#loader, #loader-msg').show();
-            },
-            complete: function() {
-                $('#loader, #loader-msg').hide();
-            },
-            success: function(data) {
-                if(data.error==1){
-                    for(var i=0; i<data.errors.length; i++){
-                        $("#status-msg").append(data.errors[i]);
-                        $("#status-msg").append("<br/>");
-                    }
-                }else{
-                    $("#status-msg").text("<?php echo $this->t('{updater:updater:updater_success_backup}')." ".$this->t('{updater:updater:updater_success_make}'); ?>");
-                    reloadLastBackup(data.lastBackup);
-                    reloadListById('backups', data.backups);
-                }
-
-            },
-            error: function() {
-                $("#status-msg").append("<?php echo $this->t('{updater:updater:updater_update_error}'); ?>");
-                $("#status-msg").append("<br/>");
-            }
-        });
-    }
-
-    function delete_backup(){
-
-        var backup = document.getElementById("backups").value;
-
-        $("#status-msg").html("");
-        $("#loader-msg").html("<?php echo $this->t('{updater:updater:updater_process_delete_backup}'); ?> " + backup + ", <?php echo $this->t('{updater:updater:updater_process_wait_seconds}'); ?>...");
-
-        if (window.confirm("<?php echo $this->t('{updater:updater:updater_confirm_dialog}'); ?>")) { 
-
-            document.getElementById("selected_backup_delete").value = encodeURIComponent(backup);
-
-            $.ajax({
-                type: "POST",
-                url: "delete_backup.php",
-                data: $('#form-delete').serialize(),
-                dataType: "json",
-                beforeSend: function() {
-                    toggleModal();
-                    $('#loader, #loader-msg').show();
-                },
-                complete: function() {
-                    $('#loader, #loader-msg').hide();
-                },
-                success: function(data) {
-
-                    if(data.error==1){
-                        for(var i=0; i<data.errors.length; i++){
-                            $("#status-msg").append(data.errors[i]);
-                            $("#status-msg").append("<br/>");
-                        }
-                    }else{
-                        $("#status-msg").text("<?php echo $this->t('{updater:updater:updater_success_backup}').$this->t('{updater:updater:updater_success_delete}'); ?>");
-                        reloadLastBackup(data.lastBackup);
-                        reloadListById('backups', data.backups);
-                    }
-                    
-                },
-                error: function() {
-                    $("#status-msg").append("<?php echo $this->t('{updater:updater:updater_update_error}'); ?>");
-                    $("#status-msg").append("<br/>");
-                }
-            });
-
-            return true;
-
-        }else{
-
-            return false;
-
-        }
-
-    }
-
-    function restore_backup(){
-
-        var backup = document.getElementById("backups").value;
-
-        document.getElementById("selected_backup_restore").value = encodeURIComponent(backup);
-
-        $("#loader-msg").html("<?php echo $this->t('{updater:updater:updater_process_restore_backup}'); ?> " + backup + ", <?php echo $this->t('{updater:updater:updater_process_wait_seconds}'); ?>...");
-        $("#status-msg").html("");
-
-        $.ajax({
-            type: "POST",
-            url: "restore_backup.php",
-            data: $('#form-restore').serialize(),
-            dataType: "json",
-            beforeSend: function() {
-                toggleModal();
-                $('#loader, #loader-msg').show();
-            },
-            complete: function() {
-                $('#loader, #loader-msg').hide();
-            },
-            success: function(data) {
-
-                if(data.error==1){
-                    for(var i=0; i<data.errors.length; i++){
-                        $("#status-msg").append(data.errors[i]);
-                        $("#status-msg").append("<br/>");
-                    }
-                }else{
-                    $("#status-msg").text("<?php echo $this->t('{updater:updater:updater_success_backup}').$this->t('{updater:updater:updater_success_restore}'); ?>");
-                }
-                
-            },
-            error: function() {
-                $("#status-msg").append("<?php echo $this->t('{updater:updater:updater_update_error}'); ?>");
-                $("#status-msg").append("<br/>");
-            }
-        });
-
-    }
 
     function toggleModal() {
         modal.classList.toggle("show-modal");

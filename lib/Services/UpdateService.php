@@ -383,6 +383,3 @@ class UpdateService
 
 }
 
-
-
-?>

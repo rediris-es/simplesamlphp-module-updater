@@ -54,4 +54,4 @@ $sirinfo['errors'] = $BackupService->getErrors();
 $t->data['sir'] = $sirinfo;
 $t->data['pageid'] = "frontpage_config";
 $t->show();
-?>
+
