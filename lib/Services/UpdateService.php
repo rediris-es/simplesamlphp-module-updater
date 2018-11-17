@@ -235,12 +235,13 @@ class UpdateService
 
 		symlink ($sspDir ,"./simplesamlphp");
 
-		if(!chdir($sspDir)){
+		if(!chdir("./simplesamlphp")){
 			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error_5}');
 			\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_error_5}'));
 			return false;
 		}
 
+		echo "PATH:".getcwd()."<br>";
 		$input = new ArrayInput(array('command' => 'install'));
 		if(!$application->run($input)) {
 			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error_6}');
