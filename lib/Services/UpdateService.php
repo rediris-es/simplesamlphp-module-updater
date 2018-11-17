@@ -241,7 +241,6 @@ class UpdateService
 			return false;
 		}
 
-		echo "PATH:".getcwd()."<br>";
 		$input = new ArrayInput(array('command' => 'install'));
 		if(!$application->run($input)) {
 			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error_6}');
@@ -254,12 +253,12 @@ class UpdateService
 			return false;
 		}*/
 
-		$input = new ArrayInput(array('command' => 'dump-autoload -a'));
+		/*$input = new ArrayInput(array('command' => 'dump-autoload -a'));
 		if(!$application->run($input)) {
 			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error_7}');
 			\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_error_7}'));
 			return false;
-		}
+		}*/
 		/*exec('composer dump-autoload -a', $output, $return);
 		if (!$return) {
 			$this->errros[]=$this->translation->t('{updater:updater:updater_update_error_7}');
