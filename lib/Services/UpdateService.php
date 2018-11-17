@@ -52,13 +52,19 @@ class UpdateService
 		// change out of the webroot so that the vendors file is not created in
 		// a place that will be visible to the intahwebz
 
+
+		\SimpleSAML\Logger::info('Comienza el proceso de actualización...');
+		\SimpleSAML\Logger::info('Preparamos los ficheros y configuraciones necesarias...');
+
 		if(!chdir('../../')){
 			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}');
+			\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_error}'));
 			return false;
 		}
 
 		if(!copy('composer.json', 'composer.back.json')){
 			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}');
+			\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_error}'));
 			return false;
 		}
 
@@ -72,12 +78,15 @@ class UpdateService
 		//touch('composer.json');
 		if(file_put_contents("composer.json", $composerData)===FALSE){
 			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}');
+			\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_error}'));
 			return false;
 		}
 
 
 
 		putenv('COMPOSER_HOME=' . __DIR__ . '/../vendor/bin/composer');
+
+		\SimpleSAML\Logger::info('Comienza la ejecución del composer update');
 		//Create the commands
 		$input = new ArrayInput(array('command' => 'update'));
 		//Create the application and run it with the commands
@@ -85,8 +94,12 @@ class UpdateService
 		$application->setAutoExit(false);
 		if(!$application->run($input)) {
 			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}');
+			\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_error}'));
 			return false;
 		}
+
+		\SimpleSAML\Logger::info('Composer update se ha ejecutado correctamente');
+		\SimpleSAML\Logger::info('Ha continuación restructuramos los directorios, ficheros y dependencias...');
 
 		$system = new System();
 
@@ -192,7 +205,7 @@ class UpdateService
 			unlink($sspDir.'/modules/exampleauth/default-disable');
 		}
 
-		touch($sspDir.'/modules/exampleauth/enable');
+		touch($sspDir.'/modules/exampleauth/default-enable');
 		touch($sspDir.'/modules/sir2skin/default-enable');
 
 		if (file_exists($sspDir.'/modules/sir2skin/default-disable')) {
@@ -224,6 +237,7 @@ class UpdateService
 
 		if(!chdir($sspDir)){
 			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}');
+			\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_error}'));
 			return false;
 		}
 
@@ -234,7 +248,9 @@ class UpdateService
 		}*/
 		exec('composer install', $output, $return);
 		if (!$return) {
-		    $this->errros[]="No se ha podido actualizar correctamente.";
+		    $this->errros[]=$this->translation->t('{updater:updater:updater_update_error}');
+		    \SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_error}'));
+		    return false;
 		}
 
 		/*$input = new ArrayInput(array('command' => 'dump-autoload -a'));
@@ -244,7 +260,9 @@ class UpdateService
 		}*/
 		exec('composer dump-autoload -a', $output, $return);
 		if (!$return) {
-			$this->errros[]="No se ha podido actualizar correctamente.";
+			$this->errros[]=$this->translation->t('{updater:updater:updater_update_error}');
+			\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_error}'));
+			return false;
 		}
 
 		/*$input = new ArrayInput(array('command' => 'require composer/composer:dev-master'));
@@ -255,22 +273,26 @@ class UpdateService
 
 		exec('composer require composer/composer:dev-master', $output, $return);
 		if (!$return) {
-		    $this->errros[]="No se ha podido actualizar correctamente.";
+		    $this->errros[]=$this->translation->t('{updater:updater:updater_update_error}');
+		    \SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_error}'));
+		    return false;
 		}
 
 
 		if(!chdir('../')){
 			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}');
+			\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_error}'));
 			return false;
 		}
 
 		if(!rename('composer.back.json', 'composer.json')){
 			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}');
+			\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_error}'));
 			return false;
 		}
 
 		
-
+		\SimpleSAML\Logger::info('El proyecto se ha generado correctamente');
 
 
 
