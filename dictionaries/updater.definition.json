@@ -235,7 +235,30 @@
         "es": "Error en la restauración del composer.json a la versión inicial.",
         "en": "Can not update correctly."
     },
-
+    "updater_update_process_start": {
+        "es": "Comienza el proceso de actualización...",
+        "en": ""
+    },
+    "updater_update_process_config": {
+        "es": "Preparamos los ficheros y configuraciones necesarias...",
+        "en": ""
+    },
+    "updater_update_process_start_update": {
+        "es": "Comienza la ejecución del composer update.",
+        "en": ""
+    },
+    "updater_update_composer_ok": {
+        "es": "Composer update se ha ejecutado correctamente.",
+        "en": ""
+    },
+    "updater_update_order_proyect": {
+        "es": "Ha continuación restructuramos los directorios, ficheros y dependencias...",
+        "en": ""
+    },
+    "updater_update_process_ok": {
+        "es": "El proyecto se ha generado correctamente.",
+        "en": ""
+    },
     "updater_link": {
         "es": "Actualización de SimpleSAMLphp",
         "en": "SimpleSAMLphp update"

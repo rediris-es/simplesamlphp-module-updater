@@ -52,9 +52,8 @@ class UpdateService
 		// change out of the webroot so that the vendors file is not created in
 		// a place that will be visible to the intahwebz
 
-
-		\SimpleSAML\Logger::info('Comienza el proceso de actualización...');
-		\SimpleSAML\Logger::info('Preparamos los ficheros y configuraciones necesarias...');
+		\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_process_start}'));
+		\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_process_config}'));
 
 		if(!chdir('../../')){
 			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error_1}');
@@ -86,7 +85,7 @@ class UpdateService
 
 		putenv('COMPOSER_HOME=' . __DIR__ . '/../vendor/bin/composer');
 
-		\SimpleSAML\Logger::info('Comienza la ejecución del composer update');
+		\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_process_start_update}'));
 		//Create the commands
 		$input = new ArrayInput(array('command' => 'update'));
 		//Create the application and run it with the commands
@@ -98,8 +97,8 @@ class UpdateService
 			return false;
 		}
 
-		\SimpleSAML\Logger::info('Composer update se ha ejecutado correctamente');
-		\SimpleSAML\Logger::info('Ha continuación restructuramos los directorios, ficheros y dependencias...');
+		\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_composer_ok}'));
+		\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_order_proyect}'));
 
 		$system = new System();
 
@@ -294,7 +293,7 @@ class UpdateService
 		}
 
 		
-		\SimpleSAML\Logger::info('El proyecto se ha generado correctamente');
+		\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_process_ok}'));
 
 
 
