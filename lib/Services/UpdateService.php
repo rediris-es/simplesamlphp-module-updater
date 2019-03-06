@@ -184,10 +184,10 @@ class UpdateService
 			$system->rmRecursive($sspDir.'/config');
 		}
 
-		symlink ($configDir."/metadata/" ,$sspDir."/metadata");
-		symlink ($configDir."/cert/" ,$sspDir."/cert");
+		symlink ("..".$configDir."/metadata/" ,$sspDir."/metadata");
+		symlink ("..".$configDir."/cert/" ,$sspDir."/cert");
 		//symlink ("../".$configDir."/config/" ,$sspDir."/config");
-		symlink ($configDir."/config/" ,$sspDir."/config");
+		symlink ("..".$configDir."/config/" ,$sspDir."/config");
 
 		chmod($configDir."/metadata/saml20-idp-hosted.php", $filePermissions);
 		chmod($configDir."/metadata/saml20-sp-remote.php", $filePermissions);
@@ -219,6 +219,7 @@ class UpdateService
 
 		$input = new ArrayInput(array('command' => 'install'));
 		if(!$application->run($input)) {
+			echo "LLEGA ERROR";
 			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error_6}');
 			return false;
 		}
