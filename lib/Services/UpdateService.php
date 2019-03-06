@@ -184,10 +184,10 @@ class UpdateService
 			$system->rmRecursive($sspDir.'/config');
 		}
 
-		symlink ("/var/www/idpref-installer-updater/".$configDir."/metadata/" ,$sspDir."/metadata");
-		symlink ("/var/www/idpref-installer-updater/".$configDir."/cert/" ,$sspDir."/cert");
+		symlink ($configDir."/metadata/" ,$sspDir."/metadata");
+		symlink ($configDir."/cert/" ,$sspDir."/cert");
 		//symlink ("../".$configDir."/config/" ,$sspDir."/config");
-		symlink ("/var/www/idpref-installer-updater/".$configDir."/config/" ,$sspDir."/config");
+		symlink ($configDir."/config/" ,$sspDir."/config");
 
 		chmod($configDir."/metadata/saml20-idp-hosted.php", $filePermissions);
 		chmod($configDir."/metadata/saml20-sp-remote.php", $filePermissions);
