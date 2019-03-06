@@ -133,9 +133,6 @@
                  <input type="button" onclick="update();" value="<?php echo $this->t('{updater:updater:updater_btn_update}'); ?>"/>
              </div>
             </form>
-           <div>
-               <p><?php echo $this->t('{updater:updater:updater_versiones_nota}'); ?></p>
-           </div>
         </div>
      </fieldset>
         
