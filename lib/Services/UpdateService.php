@@ -219,8 +219,10 @@ class UpdateService
 			return false;
 		}
 
+		$application2 = new Application();
+		$application2->setAutoExit(false);
 		$input = new ArrayInput(array('command' => 'install'));
-		if(!$application->run($input)) {
+		if(!$application2->run($input)) {
 			echo "LLEGA ERROR";
 			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error_6}');
 			return false;
@@ -245,8 +247,10 @@ class UpdateService
 			return false;
 		}*/
 
+		$application3 = new Application();
+		$application3->setAutoExit(false);
 		$input = new ArrayInput(array('command' => 'require composer/composer:dev-master'));
-		if(!$application->run($input)) {
+		if(!$application3->run($input)) {
 			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error_8}');
 			\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_error_8}'));
 			return false;
