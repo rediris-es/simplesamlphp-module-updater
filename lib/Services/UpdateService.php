@@ -111,6 +111,8 @@ class UpdateService
 		rename('vendor/simplesamlphp/simplesamlphp','./'.$sspDir);
 		rename('vendor','./'.$sspDir.'/vendor');
 
+		putenv('COMPOSER_HOME=' . $sspDir. '/vendor/bin/composer');
+
 		if (!file_exists($configDir)) {
 			mkdir($configDir);
 		}
@@ -184,10 +186,10 @@ class UpdateService
 			$system->rmRecursive($sspDir.'/config');
 		}
 
-		symlink ("..".$configDir."/metadata/" ,$sspDir."/metadata");
-		symlink ("..".$configDir."/cert/" ,$sspDir."/cert");
+		symlink ("../".$configDir."/metadata/" ,$sspDir."/metadata");
+		symlink ("../".$configDir."/cert/" ,$sspDir."/cert");
 		//symlink ("../".$configDir."/config/" ,$sspDir."/config");
-		symlink ("..".$configDir."/config/" ,$sspDir."/config");
+		symlink ("../".$configDir."/config/" ,$sspDir."/config");
 
 		chmod($configDir."/metadata/saml20-idp-hosted.php", $filePermissions);
 		chmod($configDir."/metadata/saml20-sp-remote.php", $filePermissions);
