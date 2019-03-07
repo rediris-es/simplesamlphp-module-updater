@@ -39,6 +39,23 @@ class UpdateService
 	
 	public function updateSSPVersion($version){
 
+
+		/**
+
+			EXAMPLES COMPOSER IMPLEMENTATION: https://hotexamples.com/examples/-/Composer%255CConsole%255CApplication/-/php-composer%255cconsole%255capplication-class-examples.html
+			
+			- https://github.com/gwhitcher/cakeblog
+			- https://github.com/krvd/cms-Inji
+			- https://github.com/Contao-DD/NoConsoleComposer
+			- https://github.com/versionpress/versionpress
+			- https://github.com/yfix/yf
+			- https://github.com/recca0120/laravel-terminal
+			- https://github.com/Team-Quantum/QuantumCMS
+			- https://github.com/fraym/fraym
+			- https://github.com/fraym/core
+	
+		**/
+
 		/*if (file_exists(EXTRACT_DIRECTORY.'/simplesamlphp/vendor/autoload.php') == true) {
 			echo "Extracted autoload already exists. Skipping phar extraction as presumably it's already extracted.";
 		}
@@ -133,9 +150,6 @@ class UpdateService
 			mkdir($sspDir.'/cache');
 		}
 
-		if (!file_exists($sspDir.'/datadir')) {
-			mkdir($sspDir.'/datadir');
-		}
 
 		$apacheUser = exec('grep "User " `find /etc/ -name httpd.conf` | cut -d " " -f 2');
 		$apacheGroup = exec('grep "Group " `find /etc/ -name httpd.conf` | cut -d " " -f 2');
@@ -188,24 +202,23 @@ class UpdateService
 
 		symlink ("../".$configDir."/metadata/" ,$sspDir."/metadata");
 		symlink ("../".$configDir."/cert/" ,$sspDir."/cert");
-		//symlink ("../".$configDir."/config/" ,$sspDir."/config");
 		symlink ("../".$configDir."/config/" ,$sspDir."/config");
 
 		chmod($configDir."/metadata/saml20-idp-hosted.php", $filePermissions);
 		chmod($configDir."/metadata/saml20-sp-remote.php", $filePermissions);
 
-		//$system->chmodRecursive($sspDir."/modules", $folderPermissions);
+		$system->chmodRecursive($sspDir."/modules", $folderPermissions);
 
-		$this->downloadAndWriteConfig($configDir."/config/config.php");
+		//$this->downloadAndWriteConfig($configDir."/config/config.php");
 		
 		chmod($configDir."/config/config.php", $filePermissions);
 		chmod($sspDir."/modules/idpinstaller/lib/makeCert.sh", $folderPermissions);
 
-		//$system->chmodRecursive($configDir."/cert", $folderPermissions);
+		$system->chmodRecursive($configDir."/cert", $folderPermissions);
 		chown('composer.json', $apacheUser);
 		chgrp('composer.json', $apacheGroup);
-		//$system->chown_r($sspDir, $apacheUser, $apacheGroup);
-		//$system->chown_r($configDir, $apacheUser, $apacheGroup);
+		$system->chown_r($sspDir, $apacheUser, $apacheGroup);
+		$system->chown_r($configDir, $apacheUser, $apacheGroup);
 
 		if(file_exists("./simplesamlphp")){
 			unlink("./simplesamlphp");
