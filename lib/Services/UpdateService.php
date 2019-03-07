@@ -249,17 +249,17 @@ class UpdateService
 			return false;
 		}*/
 
-		$application3 = new Application();
+		/*$application3 = new Application();
 		$application3->setAutoExit(false);
 		$input = new ArrayInput(array('command' => 'require composer/composer dev-master'));
-		$application3->run($input);
+		$application3->run($input);*/
 		/*if(!$application3->run($input)) {
 			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error_8}');
 			\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_error_8}'));
 			return false;
 		}*/
 
-		//exec('composer require composer/composer:dev-master', $output, $return);
+		exec('composer require composer/composer:dev-master', $output, $return);
 		/*if (!$return) {
 			$this->errros[]=$this->translation->t('{updater:updater:updater_update_error_8}');
 			\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_error_8}'));
