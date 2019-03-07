@@ -204,17 +204,17 @@ class UpdateService
 		symlink ("../".$configDir."/cert/" ,$sspDir."/cert");
 		symlink ("../".$configDir."/config/" ,$sspDir."/config");
 
-		chmod($configDir."/metadata/saml20-idp-hosted.php", $filePermissions);
-		chmod($configDir."/metadata/saml20-sp-remote.php", $filePermissions);
+		//chmod($configDir."/metadata/saml20-idp-hosted.php", $filePermissions);
+		//chmod($configDir."/metadata/saml20-sp-remote.php", $filePermissions);
 
-		$system->chmodRecursive($sspDir."/modules", $folderPermissions);
+		//$system->chmodRecursive($sspDir."/modules", $folderPermissions);
 
 		//$this->downloadAndWriteConfig($configDir."/config/config.php");
 		
-		chmod($configDir."/config/config.php", $filePermissions);
-		chmod($sspDir."/modules/idpinstaller/lib/makeCert.sh", $folderPermissions);
+		//chmod($configDir."/config/config.php", $filePermissions);
+		//chmod($sspDir."/modules/idpinstaller/lib/makeCert.sh", $folderPermissions);
 
-		$system->chmodRecursive($configDir."/cert", $folderPermissions);
+		//$system->chmodRecursive($configDir."/cert", $folderPermissions);
 		chown('composer.json', $apacheUser);
 		chgrp('composer.json', $apacheGroup);
 		$system->chown_r($sspDir, $apacheUser, $apacheGroup);
