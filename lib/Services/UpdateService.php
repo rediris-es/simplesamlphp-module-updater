@@ -217,8 +217,8 @@ class UpdateService
 		//$system->chmodRecursive($configDir."/cert", $folderPermissions);
 		chown('composer.json', $apacheUser);
 		chgrp('composer.json', $apacheGroup);
-		$system->chown_r($sspDir, $apacheUser, $apacheGroup);
-		$system->chown_r($configDir, $apacheUser, $apacheGroup);
+		//$system->chown_r($sspDir, $apacheUser, $apacheGroup);
+		//$system->chown_r($configDir, $apacheUser, $apacheGroup);
 
 		if(file_exists("./simplesamlphp")){
 			unlink("./simplesamlphp");
