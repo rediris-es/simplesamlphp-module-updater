@@ -24,7 +24,7 @@ class BackupService
 	private $translation;
     
     public function __construct() {
-        $this->checkRequeriments();
+        //$this->checkRequeriments();
         $this->config = SimpleSAML_Configuration::getInstance();
         $this->translation = new SimpleSAML_Locale_Translate($this->config);
     }
