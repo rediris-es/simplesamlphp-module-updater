@@ -251,7 +251,7 @@ class UpdateService
 
 		$application3 = new Application();
 		$application3->setAutoExit(false);
-		$input = new ArrayInput(array('command' => 'require', 'params' => 'composer/composer:dev-master'));
+		$input = new ArrayInput(array('command' => 'require', 'packages' => array('composer/composer:dev-master')));
 		$application3->run($input);
 		/*if(!$application3->run($input)) {
 			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error_8}');
