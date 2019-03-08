@@ -3,7 +3,6 @@
 //use SimpleSAML\Modules\Updater\Services\BackupService;
 //use SimpleSAML\Modules\Updater\Services\SSPVersionsService;
 
-include (__DIR__. "/../lib/Services/BackupService.php");
 include (__DIR__. "/../lib/Services/SSPVersionsService.php");
 
 $config = SimpleSAML_Configuration::getInstance();
@@ -19,8 +18,6 @@ $isadmin = SimpleSAML\Utils\Auth::isAdmin();
 
 
 $SSPVersionsService = new SSPVersionsService();
-//$BackupService = new BackupService();
-//$BackupService->getBackups();
 
 $info = array();
 $errors = array();
@@ -41,15 +38,7 @@ $sirinfo = array(
 );
 
 $sirinfo['currentVersion'] = $SSPVersionsService->getCurrentVersion();
-//$sirinfo['backups'] = $BackupService->getBackups();
-//$sirinfo['latestBackup'] = $BackupService->getLastBackup();
-//$sirinfo['backupPath'] = $BackupService->getConfigData()->getString('backup_path');
 $sirinfo['versions'] = $SSPVersionsService->getRecentVersions();
-//$sirinfo['errors'] = $BackupService->getErrors();
-//$hook = (isset($_POST['hook']) ? $_POST['hook'] : "index");
-
-
-//SimpleSAML_Module::callHooks($hook, $sirinfo);
 
 $t->data['sir'] = $sirinfo;
 $t->data['pageid'] = "frontpage_config";
