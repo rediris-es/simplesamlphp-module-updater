@@ -25,7 +25,6 @@ $data = array();
 if ($_POST['hook']=="update" 
 	&& isset($_POST['simplesamlphp_version'])) {
 
-	$BackupService = new BackupService();
 
 	$UpdateService = new UpdateService();
 
