@@ -307,7 +307,7 @@ class UpdateService
 
 	}
 
-	privte function getConfigVal($search, $file, $path){
+	private function getConfigVal($search, $file, $path){
 
 		$finder = new Finder();
 
