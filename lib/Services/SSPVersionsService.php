@@ -5,7 +5,7 @@
 class SSPVersionsService
 {
 
-	public $currentVersion;
+	private $currentVersion;
     
     public function __construct() {
     	$cfg = new SimpleSAML_Configuration(array(),array());

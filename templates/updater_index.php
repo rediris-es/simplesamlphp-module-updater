@@ -95,7 +95,7 @@
                </div>
                <div style="clear: both;"></div>
            </div>
-           <div class="input-container">
+           <!--<div class="input-container">
                <div class="float-l">
                    <label><?php echo $this->t('{updater:updater:updater_path}'); ?>:</label>
                </div>
@@ -103,7 +103,7 @@
                    <input readonly="readonly" style="width:300px; text-align: right" value="<?php echo $this->data['sir']['backupPath']; ?>">
                </div>
                <div style="clear: both;"></div>
-           </div>
+           </div>-->
        </div>
     </fieldset>
 

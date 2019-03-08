@@ -41,9 +41,9 @@ $sirinfo = array(
 );
 
 $sirinfo['currentVersion'] = $SSPVersionsService->getCurrentVersion();
-$sirinfo['backups'] = $BackupService->getBackups();
-$sirinfo['latestBackup'] = $BackupService->getLastBackup();
-$sirinfo['backupPath'] = $BackupService->getConfigData()->getString('backup_path');
+//$sirinfo['backups'] = $BackupService->getBackups();
+//$sirinfo['latestBackup'] = $BackupService->getLastBackup();
+//$sirinfo['backupPath'] = $BackupService->getConfigData()->getString('backup_path');
 $sirinfo['versions'] = $SSPVersionsService->getRecentVersions();
 $sirinfo['errors'] = $BackupService->getErrors();
 //$hook = (isset($_POST['hook']) ? $_POST['hook'] : "index");
