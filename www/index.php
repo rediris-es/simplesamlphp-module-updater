@@ -19,8 +19,8 @@ $isadmin = SimpleSAML\Utils\Auth::isAdmin();
 
 
 $SSPVersionsService = new SSPVersionsService();
-$BackupService = new BackupService();
-$BackupService->getBackups();
+//$BackupService = new BackupService();
+//$BackupService->getBackups();
 
 $info = array();
 $errors = array();
@@ -45,7 +45,7 @@ $sirinfo['currentVersion'] = $SSPVersionsService->getCurrentVersion();
 //$sirinfo['latestBackup'] = $BackupService->getLastBackup();
 //$sirinfo['backupPath'] = $BackupService->getConfigData()->getString('backup_path');
 $sirinfo['versions'] = $SSPVersionsService->getRecentVersions();
-$sirinfo['errors'] = $BackupService->getErrors();
+//$sirinfo['errors'] = $BackupService->getErrors();
 //$hook = (isset($_POST['hook']) ? $_POST['hook'] : "index");
 
 
