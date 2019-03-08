@@ -5,7 +5,6 @@
 
 include (__DIR__. "/../lib/Services/UpdateService.php");
 include (__DIR__. "/../lib/Services/SSPVersionsService.php");
-include (__DIR__. "/../lib/Services/BackupService.php");
 
 $config = SimpleSAML_Configuration::getInstance();
 $session = SimpleSAML_Session::getSessionFromRequest();
@@ -28,9 +27,6 @@ if ($_POST['hook']=="update"
 
 	$BackupService = new BackupService();
 
-
-	//$securityBackupPath = $BackupService->createSecurityBackup();
-
 	$UpdateService = new UpdateService();
 
 	preg_match('!\(([^\)]+)\)!', $_POST['simplesamlphp_version'], $match);
@@ -46,7 +42,6 @@ if ($_POST['hook']=="update"
 
 	if($error==0){
 		$SSPVersionsService->setCurrentVersion($version);
-		//$BackupService->deleteSecurityBackup($securityBackupPath);
 	}
 
 	$data['currentVersion'] = $SSPVersionsService->getCurrentVersion();

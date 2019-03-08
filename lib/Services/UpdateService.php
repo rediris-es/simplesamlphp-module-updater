@@ -232,54 +232,17 @@ class UpdateService
 			return false;
 		}
 
-		/*$application2 = new Application();
+		$application2 = new Application();
 		$application2->setAutoExit(false);
 		$input = new ArrayInput(array('command' => 'install'));
-		$application2->run($input);*/
+		$application2->run($input);
+		
+			
 
-
-		/*if(!$application2->run($input)) {
-			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error_6}');
-			return false;
-		}*/
-
-
-		exec('composer install', $output, $return);
-		/*if (!$return) {
-			$this->errros[]=$this->translation->t('{updater:updater:updater_update_error_6}');
-			\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_error_6}'));
-			return false;
-		}*/
-
-		/*$input = new ArrayInput(array('command' => 'dump-autoload -a'));
-		if(!$application->run($input)) {
-			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error_7}');
-			\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_error_7}'));
-			return false;
-		}*/
-		/*exec('composer dump-autoload -a', $output, $return);
-		if (!$return) {
-			$this->errros[]=$this->translation->t('{updater:updater:updater_update_error_7}');
-			\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_error_7}'));
-			return false;
-		}*/
-
-		/*$application3 = new Application();
+		$application3 = new Application();
 		$application3->setAutoExit(false);
 		$input = new ArrayInput(array('command' => 'require', 'packages' => array('composer/composer:dev-master')));
-		$application3->run($input);*/
-		/*if(!$application3->run($input)) {
-			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error_8}');
-			\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_error_8}'));
-			return false;
-		}*/
-
-		exec('composer require composer/composer:dev-master', $output, $return);
-		/*if (!$return) {
-			$this->errros[]=$this->translation->t('{updater:updater:updater_update_error_8}');
-			\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_error_8}'));
-			return false;
-		}*/
+		$application3->run($input);
 
 
 		if(!chdir('../')){
@@ -299,67 +262,8 @@ class UpdateService
 
 
 
-		/*$system = new System();
-		exec('\cp -r ./vendor/simplesamlphp/simplesamlphp/* ./simplesamlphp', $output, $return);
-		if ($return!==0) {
-			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}');
-			return false;
-		}
-
-		if (file_exists('vendor')) {
-			$system->rmRecursive("vendor");
-		}else{
-			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}');
-			return false;
-		}
 		
-		if(!chdir('simplesamlphp')){
-			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}');
-			return false;
-		}
-
-		$input = new ArrayInput(array('command' => 'install'));
-		if(!$application->run($input)) {
-			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}');
-			return false;
-		}
-		//exec('composer install', $output, $return);
-		//if (!$return) {
-			//$this->errros[]="No se ha podido actualizar correctamente.";
-		//}
-
-		$input = new ArrayInput(array('command' => 'dump-autoload -a'));
-		if(!$application->run($input)) {
-			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}');
-			return false;
-		}
-		//exec('composer dump-autoload -a', $output, $return);
-		//if (!$return) {
-			//$this->errros[]="No se ha podido actualizar correctamente.";
-		//}
-
-		$input = new ArrayInput(array('command' => 'require composer/composer:dev-master'));
-		if(!$application->run($input)) {
-			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}');
-			return false;
-		}
-
-
-		if(!chdir('../')){
-			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}');
-			return false;
-		}
-
-		if(!rename('composer.back.json', 'composer.json')){
-			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error}');
-			return false;
-		}
-		//exec('composer require composer/composer:dev-master', $output, $return);
-		//if (!$return) {
-			//$this->errros[]="No se ha podido actualizar correctamente.";
-		//}
-		//shell_exec('composer update');
-		$system->rmRecursive("./vendor");*/
+		/*$system->rmRecursive("./vendor");*/
 
 		if (file_exists($sspDir.'/modules/exampleauth/default-disable')) {
 			unlink($sspDir.'/modules/exampleauth/default-disable');
