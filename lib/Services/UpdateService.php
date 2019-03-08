@@ -12,6 +12,7 @@ define('EXTRACT_DIRECTORY', "../");
 use SimpleSAML\Module;
 use SimpleSAML\Configuration;
 
+
 include (__DIR__. "/../Utils/System.php");
 //include (__DIR__. "/SSPVersionsService.php");
 //This requires the phar to have been extracted successfully.
@@ -21,6 +22,7 @@ require_once (EXTRACT_DIRECTORY.'vendor/autoload.php');
 use Composer\Console\Application;
 use Composer\Command\UpdateCommand;
 use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Finder\Finder;
 
 class UpdateService
 {
@@ -151,8 +153,14 @@ class UpdateService
 		}
 
 
-		$apacheUser = exec('grep "User " `find /etc/ -name httpd.conf` | cut -d " " -f 2');
-		$apacheGroup = exec('grep "Group " `find /etc/ -name httpd.conf` | cut -d " " -f 2');
+		//$apacheUser = exec('grep "User " `find /etc/ -name httpd.conf` | cut -d " " -f 2');
+		//$apacheGroup = exec('grep "Group " `find /etc/ -name httpd.conf` | cut -d " " -f 2');
+
+		$apacheUser = $this->getConfigVal("User ", "httpd.conf", "/etc/");
+		$apacheGroup = $this->getConfigVal("Group ", "httpd.conf", "/etc/");
+
+		echo $apacheUser.":".$apacheGroup;
+
 		$filePermissions = octdec("0664");
 		$folderPermissions = octdec("0775");
 
@@ -297,6 +305,30 @@ class UpdateService
 			touch($sspDir.'/modules/sir2skin/default-enable');
 		}
 
+	}
+
+	privte function getConfigVal($search, $file, $path){
+
+		$finder = new Finder();
+
+		$finder->files()->name($file)->in($path);
+
+		foreach ($finder as $file) {
+			$contents = $file->getContents();
+			$array = file($contents, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+			$matches = array_filter($array, function($var) use ($search) { 
+             	return preg_match("/^.*$search.*\$/m", $var); 
+           	});
+
+           	if (count($matches) > 0) {
+           		$line = $matches[0];
+           		list($key, $value) = explode(" ");
+           		return $value;
+			}
+		}
+
+		return "";
 	}
 
 	 private function downloadAndWriteConfig($configPath)
