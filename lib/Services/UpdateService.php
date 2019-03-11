@@ -152,7 +152,7 @@ class UpdateService
 			mkdir($sspDir.'/cache');
 		}
 
-		$config = $this->parseFile("httpd.conf", "/etc/");
+		$config = $this->parseFile("httpd.conf", "/etc/httpd/");
 
 		$apacheUser = $this->findArrayValByKey("User", $config, "httpd");
 		$apacheGroup = $this->findArrayValByKey("Group", $config, "httpd");
