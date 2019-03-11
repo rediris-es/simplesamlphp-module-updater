@@ -152,14 +152,10 @@ class UpdateService
 			mkdir($sspDir.'/cache');
 		}
 
+		$config = parseFile("httpd.conf", "/etc/");
 
-		//$apacheUser = exec('grep "User " `find /etc/ -name httpd.conf` | cut -d " " -f 2');
-		//$apacheGroup = exec('grep "Group " `find /etc/ -name httpd.conf` | cut -d " " -f 2');
-
-		$apacheUser = $this->getConfigVal("User ", "httpd.conf", "/etc/");
-		$apacheGroup = $this->getConfigVal("Group ", "httpd.conf", "/etc/");
-
-		echo $apacheUser.":".$apacheGroup;
+		$apacheUser = $this->findArrayValByKey("User", $config, "httpd");
+		$apacheGroup = $this->findArrayValByKey("Group", $config, "httpd");
 
 		$filePermissions = octdec("0664");
 		$folderPermissions = octdec("0775");
@@ -307,28 +303,37 @@ class UpdateService
 
 	}
 
-	private function getConfigVal($search, $file, $path){
+	private function findArrayValByKey($search, $array, $default){
+        
+	    if (array_key_exists($search, $array)) {
+	       return $array[$search];
+	    }else{
+	       return $default;
+	    }
 
-		$finder = new Finder();
+	}
 
-		$finder->files()->name($file)->in($path);
+	private function parseFile($file, $path){
 
-		foreach ($finder as $file) {
-			$contents = $file->getContents();
-			$array = file($contents, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+	    $finder = new Finder();
 
-			$matches = array_filter($array, function($var) use ($search) { 
-             	return preg_match("/^.*$search.*\$/m", $var); 
-           	});
+	    $finder->files()->name($file)->in($path);
 
-           	if (count($matches) > 0) {
-           		$line = $matches[0];
-           		list($key, $value) = explode(" ");
-           		return $value;
-			}
-		}
+	    $iterator = $finder->getIterator();
+	    $iterator->rewind();
+	    $file = $iterator->current();
 
-		return "";
+	    $content = explode("\n",$file->getContents());
+	    $config = array();
+
+	    foreach ($content as $l) {
+	        preg_match("/^(?P<key>\w+)\s+(?P<value>.*)/", $l, $matches);
+	        if (isset($matches['key'])) {
+	            $config[$matches['key']] = $matches['value'];
+	        }
+	    }
+	   
+	    return $config;
 	}
 
 	 private function downloadAndWriteConfig($configPath)

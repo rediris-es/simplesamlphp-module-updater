@@ -16,7 +16,6 @@ $loginurl = SimpleSAML\Utils\Auth::getAdminLoginURL();
 $isadmin = SimpleSAML\Utils\Auth::isAdmin();
 
 
-
 $SSPVersionsService = new SSPVersionsService();
 
 $info = array();
