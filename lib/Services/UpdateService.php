@@ -301,6 +301,8 @@ class UpdateService
 			touch($sspDir.'/modules/sir2skin/default-enable');
 		}
 
+		return true;
+
 	}
 
 	private function findArrayValByKey($search, $array, $default){
