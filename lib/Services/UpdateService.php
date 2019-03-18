@@ -7,7 +7,7 @@ use SimpleSAML\Modules\Updater\Services\SSPVersionsService;*/
 
 ini_set('memory_limit','-1'); 
 ini_set('max_execution_time', '-1');
-define('EXTRACT_DIRECTORY', "../");
+define('EXTRACT_DIRECTORY', "./../../extractedComposer");
 
 use SimpleSAML\Module;
 use SimpleSAML\Configuration;
@@ -16,7 +16,6 @@ use SimpleSAML\Configuration;
 include (__DIR__. "/../Utils/System.php");
 //include (__DIR__. "/SSPVersionsService.php");
 //This requires the phar to have been extracted successfully.
-require_once (EXTRACT_DIRECTORY.'vendor/autoload.php');
 
 //Use the Composer classes
 use Composer\Console\Application;
@@ -58,14 +57,15 @@ class UpdateService
 	
 		**/
 
-		/*if (file_exists(EXTRACT_DIRECTORY.'/simplesamlphp/vendor/autoload.php') == true) {
-			echo "Extracted autoload already exists. Skipping phar extraction as presumably it's already extracted.";
-		}
-		else{
-			$composerPhar = new Phar("Composer.phar");
+		if (!file_exists(EXTRACT_DIRECTORY.'/vendor/autoload.php') == true) {
+			$composerPhar = new Phar("-/../../composer.phar");
 			//php.ini setting phar.readonly must be set to 0
 			$composerPhar->extractTo(EXTRACT_DIRECTORY);
-		}*/
+		}
+
+		require_once (EXTRACT_DIRECTORY.'/vendor/autoload.php');
+
+		
 
 		
 		// change out of the webroot so that the vendors file is not created in
@@ -243,10 +243,10 @@ class UpdateService
 		
 			
 
-		$application3 = new Application();
+		/*$application3 = new Application();
 		$application3->setAutoExit(false);
 		$input = new ArrayInput(array('command' => 'require', 'packages' => array('composer/composer:dev-master')));
-		$application3->run($input);
+		$application3->run($input);*/
 
 
 		if(!chdir('../')){
