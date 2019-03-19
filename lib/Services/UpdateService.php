@@ -7,7 +7,7 @@ use SimpleSAML\Modules\Updater\Services\SSPVersionsService;*/
 
 ini_set('memory_limit','-1'); 
 ini_set('max_execution_time', '-1');
-define('EXTRACT_DIRECTORY', "./../../extractedComposer");
+define('EXTRACT_DIRECTORY', "../");
 
 use SimpleSAML\Module;
 use SimpleSAML\Configuration;
@@ -16,9 +16,13 @@ use SimpleSAML\Configuration;
 include (__DIR__. "/../Utils/System.php");
 //include (__DIR__. "/SSPVersionsService.php");
 //This requires the phar to have been extracted successfully.
+//require_once (EXTRACT_DIRECTORY.'vendor/autoload.php');
 
 //Use the Composer classes
-
+use Composer\Console\Application;
+use Composer\Command\UpdateCommand;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Finder\Finder;
 
 class UpdateService
 {
@@ -54,18 +58,6 @@ class UpdateService
 	
 		**/
 
-		if (!file_exists(EXTRACT_DIRECTORY.'/vendor/autoload.php') == true) {
-			$composerPhar = new Phar("./../../composer.phar");
-			//php.ini setting phar.readonly must be set to 0
-			$composerPhar->extractTo(EXTRACT_DIRECTORY);
-		}
-
-		require_once (EXTRACT_DIRECTORY.'/vendor/autoload.php');
-
-		require_once (EXTRACT_DIRECTORY.'/vendor/Composer/Console/Application.php';
-		require_once (EXTRACT_DIRECTORY.'/vendor/Composer/Command/UpdateCommand.php';
-		require_once (EXTRACT_DIRECTORY.'/vendor/Symfony/Component/Console/Input/ArrayInput.php';
-		require_once (EXTRACT_DIRECTORY.'/vendor/Component/Finder/Finder';
 
 		
 		// change out of the webroot so that the vendors file is not created in

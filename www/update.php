@@ -3,8 +3,10 @@
 //use SimpleSAML\Modules\Updater\Services\BackupService;
 //use SimpleSAML\Modules\Updater\Services\SSPVersionsService;
 
-include (__DIR__. "/../lib/Services/UpdateService.php");
+
 include (__DIR__. "/../lib/Services/SSPVersionsService.php");
+
+define('EXTRACT_DIRECTORY', "./../../extractedComposer");
 
 $config = SimpleSAML_Configuration::getInstance();
 $session = SimpleSAML_Session::getSessionFromRequest();
@@ -25,6 +27,15 @@ $data = array();
 if ($_POST['hook']=="update" 
 	&& isset($_POST['simplesamlphp_version'])) {
 
+
+	if (!file_exists(EXTRACT_DIRECTORY.'/vendor/autoload.php') == true) {
+		$composerPhar = new Phar("./../../composer.phar");
+		//php.ini setting phar.readonly must be set to 0
+		$composerPhar->extractTo(EXTRACT_DIRECTORY);
+	}
+
+	require_once (EXTRACT_DIRECTORY.'/vendor/autoload.php');
+	include (__DIR__. "/../lib/Services/UpdateService.php");
 
 	$UpdateService = new UpdateService();
 
