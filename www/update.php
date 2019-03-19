@@ -6,7 +6,7 @@
 
 include (__DIR__. "/../lib/Services/SSPVersionsService.php");
 
-define('EXTRACT_DIRECTORY', "./../../extractedComposer");
+define('EXTRACT_DIRECTORY', __DIR__."/../extractedComposer");
 
 $config = SimpleSAML_Configuration::getInstance();
 $session = SimpleSAML_Session::getSessionFromRequest();
@@ -29,9 +29,13 @@ if ($_POST['hook']=="update"
 
 
 	if (!file_exists(EXTRACT_DIRECTORY.'/vendor/autoload.php') == true) {
-		$composerPhar = new Phar("./../../composer.phar");
-		//php.ini setting phar.readonly must be set to 0
-		$composerPhar->extractTo(EXTRACT_DIRECTORY);
+		try{
+			$composerPhar = new Phar("./../composer.phar");
+			//php.ini setting phar.readonly must be set to 0
+			$composerPhar->extractTo(EXTRACT_DIRECTORY);
+		} catch (Exception $e){
+			var_dump($e);
+		}
 	}
 
 	require_once (EXTRACT_DIRECTORY.'/vendor/autoload.php');
