@@ -18,10 +18,7 @@ include (__DIR__. "/../Utils/System.php");
 //This requires the phar to have been extracted successfully.
 
 //Use the Composer classes
-use Composer\Console\Application;
-use Composer\Command\UpdateCommand;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Finder\Finder;
+
 
 class UpdateService
 {
@@ -58,14 +55,17 @@ class UpdateService
 		**/
 
 		if (!file_exists(EXTRACT_DIRECTORY.'/vendor/autoload.php') == true) {
-			$composerPhar = new Phar("-/../../composer.phar");
+			$composerPhar = new Phar("./../../composer.phar");
 			//php.ini setting phar.readonly must be set to 0
 			$composerPhar->extractTo(EXTRACT_DIRECTORY);
 		}
 
 		require_once (EXTRACT_DIRECTORY.'/vendor/autoload.php');
 
-		
+		require_once (EXTRACT_DIRECTORY.'/vendor/Composer/Console/Application.php';
+		require_once (EXTRACT_DIRECTORY.'/vendor/Composer/Command/UpdateCommand.php';
+		require_once (EXTRACT_DIRECTORY.'/vendor/Symfony/Component/Console/Input/ArrayInput.php';
+		require_once (EXTRACT_DIRECTORY.'/vendor/Component/Finder/Finder';
 
 		
 		// change out of the webroot so that the vendors file is not created in
