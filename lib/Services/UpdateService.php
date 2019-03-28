@@ -13,9 +13,6 @@ use SimpleSAML\Configuration;
 
 
 include (__DIR__. "/../Utils/System.php");
-//include (__DIR__. "/SSPVersionsService.php");
-//This requires the phar to have been extracted successfully.
-//require_once (EXTRACT_DIRECTORY.'vendor/autoload.php');
 
 //Use the Composer classes
 use Composer\Console\Application;
@@ -141,6 +138,10 @@ class UpdateService
 
 		if (!file_exists($sspDir.'/cache')) {
 			mkdir($sspDir.'/cache');
+		}
+
+		if (!file_exists($sspDir.'/log')) {
+			mkdir($sspDir.'/log');
 		}
 
 		$config = $this->parseFile("httpd.conf", "/etc/httpd/");
