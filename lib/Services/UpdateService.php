@@ -144,10 +144,15 @@ class UpdateService
 			mkdir($sspDir.'/log');
 		}
 
-		$config = $this->parseFile("httpd.conf", "/etc/httpd/");
+		$windows_os = array("WIN32","WINNT","Windows");
 
-		$apacheUser = $this->findArrayValByKey("User", $config, "httpd");
-		$apacheGroup = $this->findArrayValByKey("Group", $config, "httpd");
+        if(!in_array(PHP_OS, $windows_os)){
+            $config = $this->parseFile("httpd.conf", "/etc/httpd/");
+			$apacheUser = $this->findArrayValByKey("User", $config, "httpd");
+			$apacheGroup = $this->findArrayValByKey("Group", $config, "httpd");
+        }
+
+		
 
 		$filePermissions = octdec("0664");
 		$folderPermissions = octdec("0775");
@@ -196,9 +201,9 @@ class UpdateService
 			$system->rmRecursive($sspDir.'/config');
 		}
 
-		symlink ("../".$configDir."/metadata/" ,$sspDir."/metadata");
-		symlink ("../".$configDir."/cert/" ,$sspDir."/cert");
-		symlink ("../".$configDir."/config/" ,$sspDir."/config");
+		symlink (realpath($configDir."/metadata/") ,$sspDir."/metadata");
+		symlink (realpath($configDir."/cert/") ,$sspDir."/cert");
+		symlink (realpath($configDir."/config/") ,$sspDir."/config");
 
 		//chmod($configDir."/metadata/saml20-idp-hosted.php", $filePermissions);
 		//chmod($configDir."/metadata/saml20-sp-remote.php", $filePermissions);
@@ -211,8 +216,10 @@ class UpdateService
 		//chmod($sspDir."/modules/idpinstaller/lib/makeCert.sh", $folderPermissions);
 
 		//$system->chmodRecursive($configDir."/cert", $folderPermissions);
-		chown('composer.json', $apacheUser);
-		chgrp('composer.json', $apacheGroup);
+		if(!in_array(PHP_OS, $windows_os)){
+			chown('composer.json', $apacheUser);
+			chgrp('composer.json', $apacheGroup);
+		}
 		//$system->chown_r($sspDir, $apacheUser, $apacheGroup);
 		//$system->chown_r($configDir, $apacheUser, $apacheGroup);
 
@@ -220,7 +227,7 @@ class UpdateService
 			unlink("./simplesamlphp");
 		}
 
-		symlink ($sspDir ,"./simplesamlphp");
+		symlink (realpath($sspDir) ,"./simplesamlphp");
 
 		if(!chdir("./simplesamlphp")){
 			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error_5}');
