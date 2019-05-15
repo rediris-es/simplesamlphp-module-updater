@@ -101,8 +101,7 @@ class UpdateService
 		$application = new Application();
 		$application->setAutoExit(false);
 		$result = $application->run($input, $output);
-		var_dump($result);
-		/*if() {
+		if($result!==0) {
 			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error_4}');
 			\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_error_4}'));
 			return false;
@@ -110,7 +109,7 @@ class UpdateService
 
 		\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_composer_ok}'));
 		\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_order_proyect}'));
-		*/
+		
 		return true;
 
 	}
