@@ -18,6 +18,7 @@ include (__DIR__. "/../Utils/System.php");
 use Composer\Console\Application;
 use Composer\Command\UpdateCommand;
 use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Finder\Finder;
 
 class UpdateService
@@ -95,10 +96,13 @@ class UpdateService
 		\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_process_start_update}'));
 		//Create the commands
 		$input = new ArrayInput(array('command' => 'update'));
+		$output = new BufferedOutput();
 		//Create the application and run it with the commands
 		$application = new Application();
 		$application->setAutoExit(false);
-		if(!$application->run($input)) {
+		$result = $application->run($input, $output);
+		var_dump($result);
+		/*if() {
 			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error_4}');
 			\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_error_4}'));
 			return false;
@@ -106,7 +110,7 @@ class UpdateService
 
 		\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_composer_ok}'));
 		\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_order_proyect}'));
-
+		*/
 		return true;
 
 	}
