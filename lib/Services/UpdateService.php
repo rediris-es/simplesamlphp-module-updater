@@ -103,7 +103,6 @@ class UpdateService
 		$result = $application->run($input, $output);
 		if($result!==0) {
 			$this->errors[]=$this->translation->t('{updater:updater:updater_update_error_4}');
-			$this->errors[]=nl2br($output->fetch());
 			\SimpleSAML\Logger::info(nl2br($output->fetch()));
 			\SimpleSAML\Logger::info($this->translation->t('{updater:updater:updater_update_error_4}'));
 			return false;
