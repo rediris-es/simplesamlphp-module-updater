@@ -7,22 +7,15 @@ A SimpleSAMLphp module adding support for backing up and updating SimpleSAMLphp
 Installation can be as easy as executing:
 
    composer require rediris-es/simplesamlphp-module-updater
-    
-## Configuration
+## Requeriments
 
-### Configure the module
+This installer is compatible with Windows + Apache systems, for Windows Vista, Windows Server 2008 or higher versions.
 
-Just copy the template file to the config directory:
+We must check that the creation of symbolic links is enabled for all users. Otherwise, the installer's execution will not work.
 
-    cp modules/updater/config-template/updater_config.php config/
+You can review this configuration from: Security settings -> Local Policies -> Assignment of user privileges -> Create symbolic links.
 
-and edit it. The options in this file are self-explained.
-
-Enable it [as usual in SimpleSAMLphp](https://simplesamlphp.org/docs/stable/simplesamlphp-modules#section_2). 
-
-### Create the backups directory
-
-Create the path that has been configured with the Apache process owner (usually `apache:apache`) and read and write permissions for that user.
+To use this module it is necessary that the initial installation has been made with our own installer: https://github.com/rediris-es/idpref-installer-updater
 
 ### Usage
 
