@@ -7,9 +7,10 @@ A SimpleSAMLphp module adding support for backing up and updating SimpleSAMLphp
 Installation can be as easy as executing:
 
    composer require rediris-es/simplesamlphp-module-updater
+
 ## Requeriments
 
-This installer is compatible with Windows + Apache systems, for Windows Vista, Windows Server 2008 or higher versions.
+Apart from Linux, this installer is compatible with Windows + Apache systems, for Windows Vista, Windows Server 2008 or higher versions.
 
 We must check that the creation of symbolic links is enabled for all users. Otherwise, the installer's execution will not work.
 
