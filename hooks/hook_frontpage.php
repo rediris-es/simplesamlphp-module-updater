@@ -20,8 +20,6 @@ function updater_hook_frontpage(&$links)
         			'en'=>'SimpleSAMLphp update'
         		  ),
     );
-
-
 }
 
 ?>
