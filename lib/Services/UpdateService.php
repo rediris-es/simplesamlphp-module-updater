@@ -11,9 +11,6 @@ ini_set('max_execution_time', '-1');
 use SimpleSAML\Module;
 use SimpleSAML\Configuration;
 
-
-include (__DIR__. "/../Utils/System.php");
-
 //Use the Composer classes
 use Composer\Console\Application;
 use Composer\Command\UpdateCommand;
@@ -24,7 +21,6 @@ use Symfony\Component\Finder\Finder;
 class UpdateService
 {
 
-	private $configPath = "updater_config.php";
 	private $configData;
 	private $errors;
 	private $backups = array();
