@@ -135,7 +135,7 @@
         <div id="loader-msg"></div>
         <div id="loader"></div>
         <div id="modal-button">
-          <input type="button" onclick="toggleModal();" name="close_modal" value="Cerrar"/>
+          
         </div>
     </div>
 </div>
@@ -169,6 +169,9 @@
                     $('#loader, #loader-msg').hide();
                 },
                 success: function(data) {
+
+                    $("#modal-button").append('<input type="button" onclick="toggleModal();" name="close_modal" value="Cerrar"/>');
+
                     if(data.error==1){
 
                         for(var i=0; i<data.errors.length; i++){
@@ -203,6 +206,7 @@
                     }
                 },
                 error: function() {
+                    $("#modal-button").append('<input type="button" onclick="toggleModal();" name="close_modal" value="Cerrar"/>');
                     $("#status-msg").append("<?php echo $this->t('{updater:updater:updater_update_error}'); ?>");
                     $("#status-msg").append("<br/>");
                 }
@@ -217,12 +221,6 @@
 
     function toggleModal() {
         modal.classList.toggle("show-modal");
-    }
-
-    function windowOnClick(event) {
-        if (event.target === modal) {
-            toggleModal();
-        }
     }
 
     function reloadLastBackup(lastBackup){
