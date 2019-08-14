@@ -1,6 +1,6 @@
 # simplesamlphp-module-updater
 
-A SimpleSAMLphp module adding support for backing up and updating SimpleSAMLphp
+A SimpleSAMLphp module adding support for backing up configurations and updating SimpleSAMLphp
 
 ## Installation
 
